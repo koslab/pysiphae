@@ -44,6 +44,13 @@
     <![endif]-->
 
     <style>
+        div.dc-chart svg {
+            width:100%;
+            }
+        div.dc-chart { float:none };
+    </style>
+
+    <style>
         <metal:style define-slot="style_slot"/>
     </style>
 </head>
@@ -297,6 +304,7 @@
     <script type="text/javascript" src="/++static++/bower_components/reductio/reductio.js"></script>
     <!-- Custom Theme JavaScript -->
 
+    <script type="text/javascript" src="/++static++/responsive-dc.js"></script>
     <metal:slot define-slot="javascript_footer_slot"></metal:slot>
 
 </body>
