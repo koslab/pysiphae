@@ -1,0 +1,3 @@
+<metal:master use-macro="view.main_template">
+
+</metal:master>

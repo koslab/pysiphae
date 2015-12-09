@@ -12,6 +12,8 @@ requires = [
     'pyramid',
     'pyramid_chameleon',
     'pyramid_debugtoolbar',
+    'pyramid_zcml',
+    'zope.component',
     'waitress',
     ]
 

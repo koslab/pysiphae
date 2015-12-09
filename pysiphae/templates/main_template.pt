@@ -61,52 +61,35 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">Data Raya Sektor Awam</a>
+                <a class="navbar-brand" href="/" tal:content="view.project_title"></a>
             </div>
             <!-- /.navbar-header -->
 
             <ul class="nav navbar-top-links navbar-right">
-                <li class="dropdown">
+                <li class="dropdown" tal:condition="view.inbox_provider|nothing">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-envelope fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-messages">
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <strong>John Smith</strong>
-                                    <span class="pull-right text-muted">
-                                        <em>Yesterday</em>
-                                    </span>
-                                </div>
-                                <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <strong>John Smith</strong>
-                                    <span class="pull-right text-muted">
-                                        <em>Yesterday</em>
-                                    </span>
-                                </div>
-                                <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <strong>John Smith</strong>
-                                    <span class="pull-right text-muted">
-                                        <em>Yesterday</em>
-                                    </span>
-                                </div>
-                                <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
+                        <tal:message repeat="message view.inbox_provider.messages">
+                            <li>
+                                <a tal:attributes="href message['url']">
+                                    <div>
+                                        <strong tal:content="message['from']">
+                                            John Smith</strong>
+                                        <span class="pull-right text-muted"
+                                            tal:content="message['date']">
+                                            <em>Yesterday</em>
+                                        </span>
+                                    </div>
+                                    <div tal:content="message['summary']">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing 
+                                        elit. Pellentesque eleifend...
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                        </tal:message>
                         <li>
                             <a class="text-center" href="#">
                                 <strong>Read All Messages</strong>
@@ -196,56 +179,25 @@
                     <!-- /.dropdown-tasks -->
                 </li>
                 <!-- /.dropdown -->
-                <li class="dropdown">
+                <li class="dropdown" tal:condition="view.notification_provider|nothing">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-alerts">
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-comment fa-fw"></i> New Comment
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-twitter fa-fw"></i> 3 New Followers
-                                    <span class="pull-right text-muted small">12 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-envelope fa-fw"></i> Message Sent
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-tasks fa-fw"></i> New Task
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-upload fa-fw"></i> Server Rebooted
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
+                        <tal:notif repeat="notif view.notification_provider.notifications">
+                            <li>
+                                <a href="#">
+                                    <div>
+                                        <i class="fa fa-comment fa-fw"
+                                            tal:attributes="class notif['icon-class']"></i>
+                                        <span tal:content="notif['message']">New Comment</span>
+                                        <span class="pull-right text-muted small"
+                                            tal:content="notif['when']">4 minutes ago</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                        </tal:notif>
                         <li>
                             <a class="text-center" href="#">
                                 <strong>See All Alerts</strong>
@@ -256,11 +208,12 @@
                     <!-- /.dropdown-alerts -->
                 </li>
                 <!-- /.dropdown -->
-                <li class="dropdown">
+                <li class="dropdown" tal:condition="view.auth_provider|nothing">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
-                    <ul class="dropdown-menu dropdown-user">
+                    <ul class="dropdown-menu dropdown-user" 
+                        tal:define="auth view.auth_provider.current_user|nothing">
                         <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
                         </li>
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
@@ -298,7 +251,7 @@
         </nav>
 
         <div id="page-wrapper">
-            <div class="row" tal:condition="page_header">
+            <div class="row" tal:condition="page_header|nothing">
                <div class="col-lg-12">
                     <metal:header define-slot="header"/>
                 </div>
