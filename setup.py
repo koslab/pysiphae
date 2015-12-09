@@ -15,7 +15,15 @@ requires = [
     'pyramid_zcml',
     'zope.component',
     'waitress',
-    ]
+    'SQLAlchemy',
+    'pyhive',
+    'python-memcached',
+    'happybase',
+    'elasticsearch',
+    'elasticsearch_dsl',
+    'ZODB3',
+    'Paste'
+]
 
 setup(name='pysiphae',
       version='0.0',

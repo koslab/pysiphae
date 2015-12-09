@@ -242,6 +242,11 @@
                             </div>
                             <!-- /input-group -->
                         </li>
+                        <li tal:repeat="link view.main_navigation">
+                            <a tal:attributes="href link['href']" tal:content="link['label']">
+                                Link
+                            </a>
+                        </li>
                         <metal:sidebar define-slot="sidebar"/>
                     </ul>
                 </div>
@@ -251,7 +256,7 @@
         </nav>
 
         <div id="page-wrapper">
-            <div class="row" tal:condition="page_header|nothing">
+            <div class="row">
                <div class="col-lg-12">
                     <metal:header define-slot="header"/>
                 </div>
