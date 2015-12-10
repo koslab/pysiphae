@@ -22,7 +22,8 @@ requires = [
     'elasticsearch',
     'elasticsearch_dsl',
     'ZODB3',
-    'Paste'
+    'Paste',
+    'pymongo',
 ]
 
 setup(name='pysiphae',

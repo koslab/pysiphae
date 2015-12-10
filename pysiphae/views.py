@@ -26,9 +26,14 @@ class Views(object):
         return links
 
 
-class Home(Views):
+class Pysiphae(Views):
 
     @view_config(route_name='home', renderer='templates/home.pt')
     def home(self):
         return {'view': self}
-    
+
+    @view_config(route_name='pysiphae.geocoder', renderer='json')
+    def geocoder(self):
+        location = self.request.GET.get('location', '')
+        if not location:
+            return {}
