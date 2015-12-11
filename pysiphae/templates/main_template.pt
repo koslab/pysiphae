@@ -43,11 +43,29 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+    </script>
+
+    <script src="/++static++/bower_components/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
     <style>
         div.dc-chart svg {
             width:100%;
             }
-        div.dc-chart { float:none };
+       div.dc-chart { float:none };
+      .dc-chart .pie-slice {
+         fill: black
+      }
+
+      .dc-chart g.row text {
+         fill: black
+      }
+
     </style>
 
     <style>
@@ -265,7 +283,7 @@
         <div id="page-wrapper">
             <div class="row">
                <div class="col-lg-12">
-                    <metal:header define-slot="header"/>
+                   <metal:header define-slot="header"/>
                 </div>
              </div>
             <div>
@@ -288,23 +306,25 @@
     <!-- Morris Charts JavaScript -->
     <script src="/++static++/bower_components/raphael/raphael-min.js"></script>
     <script src="/++static++/bower_components/morrisjs/morris.min.js"></script>
-
     <!-- DC.js -->
 
     <script type="text/javascript" src="/++static++/bower_components/d3/d3.min.js"></script>
     <script src="/++static++/bower_components/d3-tip/index.js"></script>
     <script type="text/javascript" src="/++static++/bower_components/crossfilter/crossfilter.js"></script>
     <script type="text/javascript" src="/++static++/bower_components/dcjs/dc.js"></script>
-    <script type="text/javascript" src="/++static++/bower_components/leaflet/dist/leaflet.js"></script>
+    <script type="text/javascript" src="/++static++/bower_components/leaflet/dist/leaflet-src.js"></script>
     <script type="text/javascript" src="/++static++/bower_components/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
     <script type="text/javascript" src="/++static++/bower_components/dc-addons/dist/leaflet-map/dc-leaflet.js"></script>
     <script src="/++static++/bower_components/dc-addons/dist/bubble-cloud/dc-bubble-cloud.js"></script>
     <script src="/++static++/bower_components/dc-addons/dist/tooltip/dc-tooltip-mixin.js"></script>
 
     <script type="text/javascript" src="/++static++/bower_components/reductio/reductio.js"></script>
-    <!-- Custom Theme JavaScript -->
+    <script type="text/javascript" src="/++static++/bower_components/dimple/dist/dimple.v2.1.6.js"></script>
 
+    <!-- Custom Theme JavaScript -->
+    <script type="text/javascript" src="/++static++/leaflet-piemarker.js"></script>
     <script type="text/javascript" src="/++static++/dc-responsive.js"></script>
+
     <metal:slot define-slot="javascript_footer_slot"></metal:slot>
 
 </body>

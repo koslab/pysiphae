@@ -24,6 +24,8 @@
     "startbootstrap-sb-admin-2": "1.0.7",
     "d3": "3.5.10",
     "dc-addons": "~0.11.2",
-    "reductio": "~0.3.0"
+    "reductio": "~0.3.0",
+    "MathJax" : "2.5.3",
+    "dimple" : "2.1.6"
   }
 }
