@@ -24,7 +24,10 @@ requires = [
     'ZODB3',
     'Paste',
     'pymongo',
-    'wraptor'
+    'wraptor',
+    'sasl',
+    'thrift',
+    'thrift_sasl'
 ]
 
 setup(name='pysiphae',
