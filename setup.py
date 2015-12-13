@@ -24,6 +24,7 @@ requires = [
     'ZODB3',
     'Paste',
     'pymongo',
+    'wraptor'
 ]
 
 setup(name='pysiphae',

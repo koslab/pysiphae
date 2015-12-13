@@ -35,6 +35,8 @@
 
     <link rel="stylesheet" type="text/css" href="/++static++/bower_components/dcjs/dc.css"/>
     <link rel="stylesheet" href="/++static++/bower_components/dc-addons/dist/tooltip/dc-tooltip-mixin.css"> 
+    <link rel="stylesheet" type="text/css" href="/++static++/style.css"/>
+
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -317,6 +319,8 @@
     <script type="text/javascript" src="/++static++/bower_components/dc-addons/dist/leaflet-map/dc-leaflet.js"></script>
     <script src="/++static++/bower_components/dc-addons/dist/bubble-cloud/dc-bubble-cloud.js"></script>
     <script src="/++static++/bower_components/dc-addons/dist/tooltip/dc-tooltip-mixin.js"></script>
+    <script src="/++static++/bower_components/dc-addons/dist/pagination/dc-pagination-mixin.js"></script>
+
 
     <script type="text/javascript" src="/++static++/bower_components/reductio/reductio.js"></script>
     <script type="text/javascript" src="/++static++/bower_components/dimple/dist/dimple.v2.1.6.js"></script>
