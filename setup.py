@@ -47,7 +47,7 @@ setup(name='pysiphae',
       packages=find_packages(),
       include_package_data=True,
       zip_safe=False,
-      install_requires=['templer.core']
+      install_requires=['templer.core'],
       extra_require={
           'server': requires
       },
