@@ -8,6 +8,11 @@ with open(os.path.join(here, 'README.rst')) as f:
 with open(os.path.join(here, 'CHANGES.rst')) as f:
     CHANGES = f.read()
 
+base_requires = [
+    'pyramid',
+    'templer.core'
+]
+
 requires = [
     'pyramid',
     'pyramid_chameleon',
@@ -47,7 +52,7 @@ setup(name='pysiphae',
       packages=find_packages(),
       include_package_data=True,
       zip_safe=False,
-      install_requires=['templer.core'],
+      install_requires=base_requires,
       extra_require={
           'server': requires
       },
