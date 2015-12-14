@@ -54,7 +54,7 @@ setup(name='pysiphae',
       include_package_data=True,
       zip_safe=False,
       install_requires=base_requires,
-      extra_require={
+      extras_require={
           'server': requires
       },
       tests_require=requires,
