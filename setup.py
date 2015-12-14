@@ -3,9 +3,9 @@ import os
 from setuptools import setup, find_packages
 
 here = os.path.abspath(os.path.dirname(__file__))
-with open(os.path.join(here, 'README.txt')) as f:
+with open(os.path.join(here, 'README.rst')) as f:
     README = f.read()
-with open(os.path.join(here, 'CHANGES.txt')) as f:
+with open(os.path.join(here, 'CHANGES.rst')) as f:
     CHANGES = f.read()
 
 requires = [
@@ -27,7 +27,8 @@ requires = [
     'wraptor',
     'sasl',
     'thrift',
-    'thrift_sasl'
+    'thrift_sasl',
+    'templer.core'
 ]
 
 setup(name='pysiphae',
@@ -53,5 +54,8 @@ setup(name='pysiphae',
       entry_points="""\
       [paste.app_factory]
       main = pysiphae:main
+
+      [paste.paster_create_template]
+      pysiphae_dashplugin = pysiphae.templer:DashPlugin
       """,
       )
