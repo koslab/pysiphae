@@ -33,7 +33,7 @@ requires = [
     'wraptor',
     'sasl',
     'thrift',
-    'thrift_sasl'
+    'thrift_sasl',
 ]
 
 setup(name='pysiphae',

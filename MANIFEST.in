@@ -1,3 +1,4 @@
 include *.txt *.ini *.cfg *.rst
+include .bowerrc
 recursive-include pysiphae *
 global-exclude *pyc
