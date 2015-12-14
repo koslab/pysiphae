@@ -27,8 +27,7 @@ requires = [
     'wraptor',
     'sasl',
     'thrift',
-    'thrift_sasl',
-    'templer.core'
+    'thrift_sasl'
 ]
 
 setup(name='pysiphae',
@@ -48,7 +47,10 @@ setup(name='pysiphae',
       packages=find_packages(),
       include_package_data=True,
       zip_safe=False,
-      install_requires=requires,
+      install_requires=['templer.core']
+      extra_require={
+          'server': requires
+      },
       tests_require=requires,
       test_suite="pysiphae",
       entry_points="""\
