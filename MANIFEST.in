@@ -1,2 +1,3 @@
 include *.txt *.ini *.cfg *.rst
-recursive-include pysiphae *.ico *.png *.css *.gif *.jpg *.pt *.txt *.mak *.mako *.js *.html *.xml
+recursive-include pysiphae *
+global-exclude *pyc
