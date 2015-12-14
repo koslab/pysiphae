@@ -10,6 +10,7 @@ with open(os.path.join(here, 'CHANGES.rst')) as f:
 
 base_requires = [
     'pyramid',
+    'zope.component',
     'templer.core'
 ]
 

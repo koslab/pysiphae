@@ -4,7 +4,7 @@ Installation
 ::
 
     pip install templer.core
-    pip install https://github.com/koslab/pysiphae.git
+    pip install git+https://github.com/koslab/pysiphae.git
 
 
 Creating a dash plugin project
