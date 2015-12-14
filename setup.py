@@ -32,7 +32,7 @@ requires = [
 ]
 
 setup(name='pysiphae',
-      version='0.0',
+      version='0.1',
       description='pysiphae',
       long_description=README + '\n\n' + CHANGES,
       classifiers=[
