@@ -1,0 +1,20 @@
+[buildout]
+parts = ${project}
+extensions = buildout.bootstrap mr.developer
+sources-dir = dev/
+develop = .
+sources = sources
+auto-checkout = *
+
+[sources]
+pysiphae = git git@github.com:koslab/pysiphae.git
+
+[${project}]
+recipe = zc.recipe.egg
+eggs = 
+    pysiphae
+    pyramid
+    templer.core
+    ${project}
+interpreter = py
+

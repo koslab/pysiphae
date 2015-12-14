@@ -1,0 +1,33 @@
+<metal:master use-macro="view.main_template">
+    <metal:style fill-slot="style_slot">
+        .sample-red { color : red }
+    </metal:style>
+    <metal:header fill-slot="header">
+        <h1 class="page-header">Price Watch</h1>
+    </metal:header>
+    <metal:content fill-slot="content">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="sample-red">Panel 1</span>
+                    </div>
+                    <div class="panel-body">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Panel 2
+                    </div>
+                    <div class="panel-body">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </metal:content>
+    <metal:script fill-slot="javascript_footer_slot">
+        <script type="text/javascript" src="/++static++${project}/default.js"></script>
+    </metal:script>
+</metal:master>

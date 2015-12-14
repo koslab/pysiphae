@@ -1,0 +1,17 @@
+<configure xmlns="http://pylonshq.com/pyramid"
+        xmlns:zcml="http://namespaces.zope.org/zcml">
+    <include package="pyramid_zcml"/>
+
+    <include file="routes.zcml"/>
+
+    <static
+        name="++static++${project}"
+        path="static"/>
+
+    <utility
+        factory=".navigation.NavigationProvider"
+        provides="pysiphae.interfaces.INavigationProvider"
+        name="${project}"/>
+
+
+</configure>

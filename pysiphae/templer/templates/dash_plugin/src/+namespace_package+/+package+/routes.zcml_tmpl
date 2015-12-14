@@ -1,0 +1,9 @@
+<configure xmlns="http://pylonshq.com/pyramid"
+        xmlns:zcml="http://namespaces.zope.org/zcml">
+    <include package="pyramid_zcml"/>
+
+    <route 
+        name="${project}"
+        pattern="/${project}"/>
+
+</configure>

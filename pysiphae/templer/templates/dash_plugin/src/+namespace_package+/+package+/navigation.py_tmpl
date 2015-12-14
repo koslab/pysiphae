@@ -1,0 +1,13 @@
+from pysiphae.interfaces import INavigationProvider
+from zope.interface import implements
+
+class NavigationProvider(object):
+    implements(INavigationProvider)
+
+    def get_links(self):
+        return [{
+            'href': '/${project}',
+            'label': '${project} Dashboard',
+            'order': 1
+        }]
+
