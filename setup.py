@@ -9,7 +9,7 @@ with open(os.path.join(here, 'CHANGES.rst')) as f:
     CHANGES = f.read()
 
 base_requires = [
-    'templer.core'
+    'templer.core==1.0b4'
 ]
 
 requires = [
