@@ -9,8 +9,6 @@ with open(os.path.join(here, 'CHANGES.rst')) as f:
     CHANGES = f.read()
 
 base_requires = [
-    'pyramid',
-    'zope.component',
     'templer.core'
 ]
 
@@ -61,7 +59,7 @@ setup(name='pysiphae',
       test_suite="pysiphae",
       entry_points="""\
       [paste.app_factory]
-      main = pysiphae:main
+      main = pysiphae.wsgi:main
 
       [paste.paster_create_template]
       pysiphae_dashplugin = pysiphae.templer:DashPlugin

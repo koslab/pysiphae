@@ -20,3 +20,4 @@ def main(global_config, **settings):
         config.load_zcml(plugin + ':configure.zcml')
 
     return config.make_wsgi_app()
+
