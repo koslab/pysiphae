@@ -53,7 +53,7 @@ setup(name='pysiphae',
       zip_safe=False,
       install_requires=base_requires,
       extras_require={
-          'server': requires
+          'framework': requires
       },
       tests_require=requires,
       test_suite="pysiphae",

@@ -12,7 +12,7 @@ pysiphae = git git@github.com:koslab/pysiphae.git
 [${project}]
 recipe = zc.recipe.egg
 eggs = 
-    pysiphae[server]
+    pysiphae[framework]
     pyramid
     templer.core
     ${project}
