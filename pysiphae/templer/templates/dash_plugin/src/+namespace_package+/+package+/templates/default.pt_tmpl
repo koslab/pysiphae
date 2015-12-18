@@ -3,7 +3,7 @@
         .sample-red { color : red }
     </metal:style>
     <metal:header fill-slot="header">
-        <h1 class="page-header">Price Watch</h1>
+        <h1 class="page-header">Header</h1>
     </metal:header>
     <metal:content fill-slot="content">
         <div class="row">

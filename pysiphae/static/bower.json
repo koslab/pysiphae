@@ -25,7 +25,11 @@
     "d3": "3.5.10",
     "dc-addons": "0.11.3",
     "reductio": "~0.3.0",
-    "MathJax" : "2.5.3",
-    "dimple" : "2.1.6"
+    "MathJax": "2.5.3",
+    "dimple": "2.1.6",
+    "heatmap.js.bower": ""
+  },
+  "resolutions": {
+    "d3": "3.5.10"
   }
 }
