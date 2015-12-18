@@ -63,15 +63,16 @@
 
     dc.heatmapLeafletChart = function (parent, chartGroup) {
         var _chart = dc.baseMixin({});
-
+        var _width = Infinity;
         var _map;
         var _heatmapLayer;
         var _mapOptions = false;
         var _defaultCenter = false;
         var _defaultZoom = false;
-        var _defaultRadius = 0.05;
+        var _defaultRadius = 10;
         var _defaultMaxOpacity = 0.8;
         var _defaultUseLocalExtrema = false;
+        var _defaultScaleRadius = false;
 
         var _tiles = function (map) {
             L.tileLayer(
@@ -86,10 +87,10 @@
             _heatmapLayer = new HeatmapOverlay({
                 radius: _chart.radius(),
                 maxOpacity: _chart.maxOpacity(),
-                scaleRadius: true,
+                scaleRadius: _chart.scaleRadius(),
                 useLocalExtrema: _chart.useLocalExtrema(),
-                latField: 'x',
-                lngField: 'y',
+                latField: 'lat',
+                lngField: 'lng',
                 valueField: 'value'
             });
 
@@ -165,6 +166,15 @@
             return _chart;
         };
 
+        _chart.width = function (_) {
+            if (!arguments.length) {
+                return _width;
+            }
+
+            _width = _;
+            return _chart;
+        };
+
         _chart.center = function (_) {
             if (!arguments.length) {
                 return _defaultCenter;
@@ -198,6 +208,16 @@
             }
 
             _defaultMaxOpacity = _;
+            return _chart;
+        };
+
+
+        _chart.scaleRadius = function (_) {
+            if (!arguments.length) {
+                return _defaultScaleRadius;
+            }
+
+            _defaultScaleRadius = _;
             return _chart;
         };
 
