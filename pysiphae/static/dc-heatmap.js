@@ -62,26 +62,27 @@
 
 
     dc.heatmapLeafletChart = function (parent, chartGroup) {
-        var _chart = dc.baseMixin({});
+        var _chart = dc.leafletMarkerChart(parent, chartGroup);
         var _width = Infinity;
         var _map;
         var _heatmapLayer;
-        var _mapOptions = false;
-        var _defaultCenter = false;
-        var _defaultZoom = false;
         var _defaultRadius = 10;
         var _defaultMaxOpacity = 0.8;
         var _defaultUseLocalExtrema = false;
         var _defaultScaleRadius = false;
-
-        var _tiles = function (map) {
-            L.tileLayer(
-                'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
-                {
-                    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                }
-            ).addTo(map);
+        var _icon = function (d, map) {
+            return new L.DivIcon({className: 'hide'});
         };
+        var _marker = function (d,map) {
+            var marker = new L.Marker(_chart.toLocArray(_chart.locationAccessor()(d)),{
+                icon: _icon(),
+                clickable: false,
+                draggable: false
+            });
+            return marker;
+        };
+
+        _chart.marker(_marker);
 
         var _heatmap = function (map) {
             _heatmapLayer = new HeatmapOverlay({
@@ -96,15 +97,6 @@
 
             map.addLayer(_heatmapLayer);
         }
-
-        var _location = function (d) {
-            var key = _chart.keyAccessor()(d);
-            return {
-                'lat': key[0],
-                'lng': key[1]
-            }
-        };
-
 
         _chart._doRender = function () {
             // render
@@ -129,9 +121,12 @@
 
             _chart.map(_map);
 
+            _chart._postRender();
+
             return _chart._doRedraw();
         };
 
+        _chart._markerRedraw = _chart._doRedraw;
         _chart._doRedraw = function () {
             var groups = _chart._computeOrderedGroups(_chart.data()).filter(function (d) {
                 return _chart.valueAccessor()(d) !== 0;
@@ -140,30 +135,13 @@
             var data = groups.map(function (d) { 
                 var loc = _chart.locationAccessor()(d);
                 return {
-                    'lat': loc.lat,
-                    'lng': loc.lng,
+                    'lat': loc[0],
+                    'lng': loc[1],
                     'value': _chart.valueAccessor()(d)
                 }
             });
             _heatmapLayer.setData({'data': data});
-        };
-
-        _chart.locationAccessor = function (_) {
-            if (!arguments.length) {
-                return _location;
-            };
-
-            _location = _;
-            return _chart;
-        };
-
-        _chart.mapOptions = function (_) {
-            if (!arguments.length) {
-                return _mapOptions;
-            }
-
-            _mapOptions = _;
-            return _chart;
+            _chart._markerRedraw();
         };
 
         _chart.width = function (_) {
@@ -172,24 +150,6 @@
             }
 
             _width = _;
-            return _chart;
-        };
-
-        _chart.center = function (_) {
-            if (!arguments.length) {
-                return _defaultCenter;
-            }
-
-            _defaultCenter = _;
-            return _chart;
-        };
-
-        _chart.zoom = function (_) {
-            if (!arguments.length) {
-                return _defaultZoom;
-            }
-
-            _defaultZoom = _;
             return _chart;
         };
 
@@ -231,16 +191,6 @@
             return _chart;
         };
 
-        _chart.tiles = function (_) {
-            if (!arguments.length) {
-                return _tiles;
-            }
-
-            _tiles = _;
-            return _chart;
-        };
-
-
         _chart.heatmap = function (_) {
             if (!arguments.length) {
                 return _heatmap;
@@ -259,14 +209,6 @@
             return _map;
         };
 
-        _chart.toLocArray = function (value) {
-            if (typeof value === 'string') {
-                // expects '11.111,1.111'
-                value = value.split(',');
-            }
-            // else expects [11.111,1.111]
-            return value;
-        };
        
         return _chart.anchor(parent, chartGroup);
     };
