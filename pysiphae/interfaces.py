@@ -1,5 +1,11 @@
 from zope.interface import Interface
 
+
+class IConfigurator(Interface):
+
+    def configure(config, settings):
+        pass
+
 class INavigationProvider(Interface):
 
     def get_links(self):

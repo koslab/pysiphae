@@ -2,6 +2,7 @@ from pyramid.config import Configurator
 from ConfigParser import ConfigParser
 from zope.component import getSiteManager
 from pysiphae.root import root_factory
+from .interfaces import IConfigurator
 
 def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
@@ -23,6 +24,9 @@ def main(global_config, **settings):
     for plugin in plugins:
         config.scan(plugin)
         config.load_zcml(plugin + ':configure.zcml')
+
+    for name, util in config.registry.getUtilitiesFor(IConfigurator):
+        util.configure(config, settings)
 
     return config.make_wsgi_app()
 
