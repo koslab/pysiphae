@@ -10,3 +10,8 @@ class INavigationProvider(Interface):
            ... ]
         """
         pass
+
+class IHomeViewResolver(Interface):
+
+    def resolve(request, groups):
+        pass

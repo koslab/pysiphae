@@ -2,10 +2,11 @@ from pyramid.view import view_config, forbidden_view_config
 from pyramid.renderers import get_renderer
 from pyramid.decorator import reify
 from zope.component import getUtilitiesFor
-from .interfaces import INavigationProvider
+from .interfaces import INavigationProvider,IHomeViewResolver
 from pyramid.httpexceptions import HTTPFound
 from pyramid.security import (remember, forget)
 from repoze.who.api import get_api as get_whoapi
+from .security import groupfinder
 
 class Views(object):
 
@@ -33,8 +34,14 @@ class Pysiphae(Views):
 
     @view_config(route_name='home', renderer='templates/home.pt')
     def home(self):
-        return {'view': self}
-
+        resolvers = self.request.registry.getUtilitiesFor(IHomeViewResolver)
+        identity = self.request.environ['repoze.who.identity']
+        groups = groupfinder(identity, self.request)
+        for name, resolver in resolvers:
+            url = resolver.resolve(self.request, groups)
+            if url:
+                return HTTPFound(location=url)
+        return {}
     
     @view_config(route_name='login', renderer='templates/login.pt')
     @forbidden_view_config(renderer='templates/login.pt')
