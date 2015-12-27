@@ -36,7 +36,7 @@ class Pysiphae(Views):
         return {'view': self}
 
     
-    @view_config(name='login', renderer='templates/login.pt')
+    @view_config(route_name='login', renderer='templates/login.pt')
     @forbidden_view_config(renderer='templates/login.pt')
     def login(self):
         request = self.request
@@ -74,10 +74,10 @@ class Pysiphae(Views):
             password = password,
             )
     
-    @view_config(name='logout')
+    @view_config(route_name='logout')
     def logout(self):
         request = self.request
         who_api = get_whoapi(request.environ)
         headers = who_api.logout()
-        return HTTPFound(location = request.resource_url(request.context),
-                         headers = headers)
+        url = request.resource_url(request.context)
+        return HTTPFound(location=url,headers=headers)

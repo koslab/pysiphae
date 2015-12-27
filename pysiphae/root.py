@@ -1,7 +1,7 @@
 from pyramid.security import Allow, Deny, Everyone
 
 class PysiphaeRoot(object):
-    __name__ = 'Pysiphae'
+    __name__ = ''
 
     __acl__ = [
         (Allow, 'group:LoggedIn', 'pysiphae.view')
