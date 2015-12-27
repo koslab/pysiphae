@@ -17,6 +17,7 @@ requires = [
     'pyramid_chameleon',
     'pyramid_debugtoolbar',
     'pyramid_zcml',
+    'pyramid_who',
     'zope.component',
     'waitress',
     'SQLAlchemy',

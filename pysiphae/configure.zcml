@@ -1,5 +1,13 @@
 <configure xmlns="http://pylonshq.com/pyramid"
     xmlns:zcml="http://namespaces.zope.org/zcml">
+
     <include package="pyramid_zcml"/>
+
+    <repozewho1authenticationpolicy
+        identifier_name="auth_tkt"
+        callback=".security.groupfinder" />
+
+    <aclauthorizationpolicy/>
+
 </configure>
 
