@@ -24,9 +24,9 @@ def main(global_config, **settings):
     for plugin in plugins:
         config.scan(plugin)
         config.load_zcml(plugin + ':configure.zcml')
-
-    for name, util in config.registry.getUtilitiesFor(IConfigurator):
-        util.configure(config, settings)
+        package = config.maybe_dotted(plugin)
+        if getattr(package, 'configure'):
+            package.configure(config, settings)
 
     return config.make_wsgi_app()
 
