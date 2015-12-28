@@ -25,7 +25,7 @@ def main(global_config, **settings):
         config.scan(plugin)
         config.load_zcml(plugin + ':configure.zcml')
         package = config.maybe_dotted(plugin)
-        if getattr(package, 'configure'):
+        if getattr(package, 'configure', None):
             package.configure(config, settings)
 
     return config.make_wsgi_app()
