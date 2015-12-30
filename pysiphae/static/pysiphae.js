@@ -3,14 +3,14 @@ var pysiphae = new (function () {
     var spinner = $('<div id="spinner"></div>');
     var has_spinner = false;
     return {
-        showSpinner: function () {
+        startSpinner: function () {
             if (!has_spinner) {
                 $('body').prepend(lock_screen);
                 $('body').prepend(spinner);
                 has_spinner = true;
             }
         },
-        hideSpinner: function () {
+        stopSpinner: function () {
             $('#lock-screen').remove();
             $('#spinner').remove();
             has_spinner = false;
