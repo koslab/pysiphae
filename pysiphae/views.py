@@ -26,6 +26,11 @@ class Views(object):
         links = []
         for name,util in getUtilitiesFor(INavigationProvider):
             links += util.get_links()
+        def has_permission(link):
+            if link.get('permission', None):
+                return self.request.has_permission(link['permission'])
+            return True
+        links = filter(has_permission, links)
         links = sorted(links, key=lambda x: x['order'])
         return links
 
@@ -42,9 +47,18 @@ class Pysiphae(Views):
             if url:
                 return HTTPFound(location=url)
         return {}
+
+    @forbidden_view_config(renderer='templates/404.pt')
+    def redirect_to_login(self):
+        request = self.request
+        url = request.url
+        login_url = request.resource_url(request.context, 'login')
+        identity = request.environ.get('repoze.who.identity', None)
+        if not identity:
+            return HTTPFound(location='%s?came_from=%s' % (login_url,url))
+        return {}
     
     @view_config(route_name='login', renderer='templates/login.pt')
-    @forbidden_view_config(renderer='templates/login.pt')
     def login(self):
         request = self.request
         login_url = request.resource_url(request.context, 'login')
