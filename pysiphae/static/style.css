@@ -1,3 +1,23 @@
 .dc-table-group {
     background: #eee;
 }
+
+#lock-screen {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background-color: #FFF;
+    opacity: 0.8;
+    z-index: 9999;
+}
+
+#spinner {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    opacity: 1;
+    z-index: 99999;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url('/++static++/loading-bar.gif');
+}

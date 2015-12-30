@@ -4,7 +4,7 @@ from pyramid.decorator import reify
 from zope.component import getUtilitiesFor
 from .interfaces import INavigationProvider,IHomeViewResolver
 from pyramid.httpexceptions import HTTPFound
-from pyramid.security import (remember, forget)
+from pyramid.security import (remember, forget,  NO_PERMISSION_REQUIRED)
 from repoze.who.api import get_api as get_whoapi
 from .security import groupfinder
 
@@ -58,7 +58,8 @@ class Pysiphae(Views):
             return HTTPFound(location='%s?came_from=%s' % (login_url,url))
         return {}
     
-    @view_config(route_name='login', renderer='templates/login.pt')
+    @view_config(route_name='login', renderer='templates/login.pt',
+            permission=NO_PERMISSION_REQUIRED)
     def login(self):
         request = self.request
         login_url = request.resource_url(request.context, 'login')

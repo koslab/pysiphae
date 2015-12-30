@@ -76,7 +76,6 @@
 </head>
 
 <body>
-
     <div id="wrapper" >
 
         <!-- Navigation -->
@@ -334,6 +333,7 @@
     <script type="text/javascript" src="/++static++/leaflet-piemarker.js"></script>
     <script type="text/javascript" src="/++static++/dc-responsive.js"></script>
     <script type="text/javascript" src="/++static++/dc-heatmap.js"></script>
+    <script type="text/javascript" src="/++static++/pysiphae.js"></script>
 
     <metal:slot define-slot="javascript_footer_slot"></metal:slot>
 
