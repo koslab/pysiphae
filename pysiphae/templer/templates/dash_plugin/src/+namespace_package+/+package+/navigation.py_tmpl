@@ -1,4 +1,5 @@
 from pysiphae.interfaces import INavigationProvider, IHomeViewResolver
+from pysiphae.decorators import home_url
 from zope.interface import implements
 
 class NavigationProvider(object):
@@ -11,10 +12,6 @@ class NavigationProvider(object):
             'order': 1
         }]
 
-class HomeViewResolver(object):
-    implements(IHomeViewResolver)
-
-    def resolve(self, request, groups):
-        # just use this as default
-        return request.resource_url(request.context, '${project}')
-
+@home_url
+def get_home_url(request, groups):
+    return request.resource_url(request.context, '${project}')

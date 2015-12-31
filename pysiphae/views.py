@@ -1,13 +1,27 @@
 from pyramid.view import view_config, forbidden_view_config
 from pyramid.renderers import get_renderer
 from pyramid.decorator import reify
+from pysiphae.decorators import home_url
 from zope.component import getUtilitiesFor
 from .interfaces import (INavigationProvider,IHomeViewResolver,
-                         ITemplateVariables)
+                         ITemplateVariables, IHomeUrl)
 from pyramid.httpexceptions import HTTPFound
 from pyramid.security import (remember, forget,  NO_PERMISSION_REQUIRED)
 from repoze.who.api import get_api as get_whoapi
 from .security import groupfinder
+
+@home_url
+def home_url_from_settings(request, groups):
+    settings = request.registry.settings
+    s = settings.get('pysiphae.home_urls', '')
+    if not s:
+        return None
+    entries = [i.split('=') for i in s.strip().split('\n')]
+    for g, path in entries:
+        if g not in groups:
+            continue
+        return request.resource_url(request.context, path)
+    return None
 
 class TraversableDict(object):
     def __init__(self, data):
@@ -65,8 +79,13 @@ class Pysiphae(Views):
         resolvers = self.request.registry.getUtilitiesFor(IHomeViewResolver)
         identity = self.request.environ['repoze.who.identity']
         groups = groupfinder(identity, self.request)
+        # FIXME: IHomeViewResolver is deprecated
         for name, resolver in resolvers:
             url = resolver.resolve(self.request, groups)
+            if url:
+                return HTTPFound(location=url)
+        for name, resolver in self.request.registry.getUtilitiesFor(IHomeUrl):
+            url = resolver(self.request, groups)
             if url:
                 return HTTPFound(location=url)
         return {}

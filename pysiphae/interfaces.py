@@ -22,5 +22,8 @@ class IHomeViewResolver(Interface):
     def resolve(request, groups):
         pass
 
+class IHomeUrl(Interface):
+    pass
+
 class ITemplateVariables(Interface):
     pass
