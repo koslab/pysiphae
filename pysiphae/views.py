@@ -2,11 +2,28 @@ from pyramid.view import view_config, forbidden_view_config
 from pyramid.renderers import get_renderer
 from pyramid.decorator import reify
 from zope.component import getUtilitiesFor
-from .interfaces import INavigationProvider,IHomeViewResolver
+from .interfaces import (INavigationProvider,IHomeViewResolver,
+                         ITemplateVariables)
 from pyramid.httpexceptions import HTTPFound
 from pyramid.security import (remember, forget,  NO_PERMISSION_REQUIRED)
 from repoze.who.api import get_api as get_whoapi
 from .security import groupfinder
+
+class TraversableDict(object):
+    def __init__(self, data):
+        self.data = data
+
+    def __getattr__(self, key):
+        try:
+            result = self.data[key]
+        except KeyError:
+            raise AttributeError(key)
+        if isinstance(result, dict):
+            return TraversableDict(result)
+        return result
+
+    def __getitem__(self, key):
+        return self.data[key]
 
 class Views(object):
 
@@ -20,6 +37,14 @@ class Views(object):
     def main_template(self):
         main_template = get_renderer('templates/main_template.pt').implementation()
         return main_template.macros['master']
+
+    @property
+    def vars(self):
+        registry = self.request.registry
+        result = {}
+        for name, factory in  registry.getUtilitiesFor(ITemplateVariables):
+            result.update(factory(self.request))
+        return TraversableDict(result)
 
     @property
     def main_navigation(self):

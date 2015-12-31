@@ -21,5 +21,16 @@ class PysiphaeRoot(object):
             acl.append(ace.split(','))
         return acl
 
+    def isAnonymous(self):
+        identity = self.request.environ.get('repoze.who.identity', None)
+        return False if identity else True
+
+    def getAuthenticatedUser(self):
+        identity = dict(self.request.environ.get('repoze.who.identity', None))
+        return {
+            'userid': identity.get('repoze.who.userid', None),
+            'identity': identity
+        }
+
 def root_factory(request,*args,**kwargs):
     return PysiphaeRoot(request)
