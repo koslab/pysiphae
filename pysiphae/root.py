@@ -1,4 +1,5 @@
 from pyramid.security import Allow, Deny, Everyone
+import re
 
 class PysiphaeRoot(object):
     __name__ = ''
