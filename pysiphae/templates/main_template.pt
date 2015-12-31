@@ -75,7 +75,7 @@
     </style>
 </head>
 
-<body>
+<body tal:define="portal view.vars.portal">
     <div id="wrapper" >
 
         <!-- Navigation -->
@@ -87,7 +87,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/" tal:content="view.project_title"></a>
+                <a class="navbar-brand" href="/" tal:content="portal.title"></a>
             </div>
             <!-- /.navbar-header -->
 
@@ -243,7 +243,7 @@
                         </li>
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>-->
-                        <li><a tal:content="view.vars.portal.getAuthenticatedUser().userid"></a></li>
+                        <li><a tal:content="portal.getAuthenticatedUser().userid"></a></li>
                         <li class="divider"></li>
                         <li><a href="/logout"><i class="fa fa-sign-out fa-fw"></i>Logout</a>
                         </li>

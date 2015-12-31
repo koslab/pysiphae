@@ -32,5 +32,11 @@ class PysiphaeRoot(object):
             'identity': identity
         }
 
+    @property
+    def title(self):
+        settings = self.request.registry.settings
+        title = settings.get('pysiphae.title','Pysiphae')
+        return title
+
 def root_factory(request,*args,**kwargs):
     return PysiphaeRoot(request)
