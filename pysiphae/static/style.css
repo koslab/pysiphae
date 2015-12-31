@@ -21,3 +21,24 @@
     background-position: center;
     background-image: url('/++static++/loading-bar.gif');
 }
+
+.huge {
+    font-size: 250%;
+}
+
+.content {
+    min-height:500px;
+}
+
+div.dc-chart svg {
+    width:100%;
+}
+div.dc-chart { float:none };
+.dc-chart .pie-slice {
+    fill: black
+}
+
+.dc-chart g.row text {
+    fill: black
+}
+

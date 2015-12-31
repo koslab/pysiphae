@@ -21,7 +21,9 @@
     "/js"
   ],
   "dependencies": {
-    "startbootstrap-sb-admin-2": "1.0.7",
+    "adminlte": "",
+    "font-awesome": "4.4.0",
+    "ionicons": "",
     "d3": "3.5.10",
     "dc-addons": "0.11.4",
     "reductio": "~0.3.0",
