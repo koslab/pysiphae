@@ -33,6 +33,7 @@ requires = [
     'sasl',
     'thrift',
     'thrift_sasl',
+    'pyyaml',
 ]
 
 setup(name='pysiphae',

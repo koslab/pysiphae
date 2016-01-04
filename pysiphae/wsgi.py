@@ -12,7 +12,9 @@ def main(global_config, **settings):
     config.include('pyramid_zcml')
     config.load_zcml('pysiphae:configure.zcml')
     config.include('pyramid_chameleon')
-    config.set_default_permission('pysiphae.View')
+    default_permission = settings.get('pysiphae.default_permission', None)
+    if default_permission:
+        config.set_default_permission(default_permission)
     config.set_root_factory(root_factory)
     config.add_static_view('++static++', 'static', cache_max_age=3600)
     config.add_route('home','/')

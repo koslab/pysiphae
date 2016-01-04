@@ -28,6 +28,13 @@
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="/++static++/bower_components/adminlte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 
+
+  <!-- jsPlumb -->
+  <link rel="stylesheet" href="/++static++/bower_components/jsPlumb/dist/css/jsplumb.css">
+  <link rel="stylesheet" href="/++static++/bower_components/jsPlumb/dist/css/jsPlumbToolkit-defaults.css">
+
+
+      <!-- data visualization -->
     <link rel="stylesheet" type="text/css" href="/++static++/bower_components/leaflet/dist/leaflet.css"/>
     <link rel="stylesheet" type="text/css" href="/++static++/bower_components/leaflet.markercluster/dist/MarkerCluster.Default.css"/>
     <link rel="stylesheet" type="text/css" href="/++static++/bower_components/leaflet.markercluster/dist/MarkerCluster.css"/>
@@ -611,7 +618,7 @@
 
 
 <!-- Pysiphae Deps -->
-
+    <script type="text/javascript" src="/++static++/bower_components/jsPlumb/dist/js/jsPlumb-2.0.5.js"></script>
     <script type="text/javascript" src="/++static++/bower_components/d3/d3.min.js"></script>
     <script src="/++static++/bower_components/d3-tip/index.js"></script>
     <script type="text/javascript" src="/++static++/bower_components/crossfilter/crossfilter.js"></script>
