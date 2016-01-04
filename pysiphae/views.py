@@ -77,7 +77,9 @@ class Pysiphae(Views):
     @view_config(route_name='home', renderer='templates/home.pt')
     def home(self):
         resolvers = self.request.registry.getUtilitiesFor(IHomeViewResolver)
-        identity = self.request.environ['repoze.who.identity']
+        identity = self.request.environ.get('repoze.who.identity', None)
+        if not identity:
+            return {}
         groups = groupfinder(identity, self.request)
         # FIXME: IHomeViewResolver is deprecated
         for name, resolver in resolvers:

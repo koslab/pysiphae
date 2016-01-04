@@ -27,8 +27,13 @@ class PysiphaeRoot(object):
         return False if identity else True
 
     def getAuthenticatedUser(self):
-        identity = dict(self.request.environ.get('repoze.who.identity', None))
+        identity = self.request.environ.get('repoze.who.identity', None)
+        if not identity:
+            return {}
+        identity = dict(identity)
         userid = identity.get('repoze.who.userid', '')
+        if not userid:
+            return {}
         if re.match(r'(\w+=.+,?)+', userid):
             userid = userid.split(',')[0].split('=')[1]
         return {
