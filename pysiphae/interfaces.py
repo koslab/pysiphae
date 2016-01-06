@@ -1,29 +1,25 @@
 from zope.interface import Interface
 
-
-class IConfigurator(Interface):
-
-    def configure(config, settings):
-        pass
-
 class INavigationProvider(Interface):
-
-    def get_links(self):
-        """
-        returns a list of links in the following format
-        
-        [{'label': 'hello world', 'href': '/path/to/somewhere' , 'order': 1}, 
-           ... ]
-        """
-        pass
-
-class IHomeViewResolver(Interface):
-
-    def resolve(request, groups):
-        pass
+    pass
 
 class IHomeUrl(Interface):
     pass
 
 class ITemplateVariables(Interface):
     pass
+
+class IStorageFactory(Interface):
+    pass
+
+class ISQLStore(Interface):
+    def connect(**options): pass
+    def execute(query, **options): pass
+    def close(): pass
+
+class IObjStore(Interface):
+    def connect(**options): pass
+    def insert(obj): pass
+    def delete(obj): pass
+    def update(obj): pass
+    def query(**filters): pass

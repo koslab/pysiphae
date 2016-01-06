@@ -2,7 +2,6 @@ from pyramid.config import Configurator
 from ConfigParser import ConfigParser
 from zope.component import getSiteManager
 from pysiphae.root import root_factory
-from .interfaces import IConfigurator
 
 def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.

@@ -61,8 +61,8 @@ class Views(object):
     @property
     def main_navigation(self):
         links = []
-        for name,util in getUtilitiesFor(INavigationProvider):
-            links += util.get_links()
+        for name, provider in getUtilitiesFor(INavigationProvider):
+            links += provider(self.request)
         def has_permission(link):
             if link.get('permission', None):
                 return self.request.has_permission(link['permission'])

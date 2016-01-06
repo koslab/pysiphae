@@ -1,16 +1,14 @@
 from pysiphae.interfaces import INavigationProvider, IHomeViewResolver
-from pysiphae.decorators import home_url
+from pysiphae.decorators import home_url, navigation
 from zope.interface import implements
 
-class NavigationProvider(object):
-    implements(INavigationProvider)
-
-    def get_links(self):
-        return [{
-            'href': '/${project}',
-            'label': '${project} Dashboard',
-            'order': 1
-        }]
+@navigation
+def get_navigation(request):
+    return [{
+        'href': '/${project}',
+        'label': '${project} Dashboard',
+        'order': 1
+    }]
 
 @home_url
 def get_home_url(request, groups):
