@@ -7,7 +7,7 @@ from pysiphae.interfaces import ISQLStorage
 from zope.interface import implements
 from wraptor.decorators import memoize
 from datetime import date,datetime
-
+from sqlalchemy.exc import ResourceClosedError
 _STORAGES={}
 
 @storage_factory(['mysql','postgresql','hive'])
@@ -42,9 +42,10 @@ class SQLAlchemyStorage(object):
     def connect(self, **options):
         self.engine.connect()
 
-    @memoize(instance_method=True)
     def execute(self, query, **options):
         rows = self.engine.execute(text(query), **options)
+        if rows._metadata is None:
+            return []
         keys = rows.keys()
         def clean_prefix(k):
             if '.' in k:
