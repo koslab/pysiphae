@@ -8,9 +8,15 @@ from zope.interface import implements
 from wraptor.decorators import memoize
 from datetime import date,datetime
 
+_STORAGES={}
+
 @storage_factory(['mysql','postgresql','hive'])
 def sqlalchemy_factory(uri, **options):
-    return SQLAlchemyStorage(uri, **options)
+    if uri in _STORAGES.keys():
+        return _STORAGES[uri]
+    storage = SQLAlchemyStorage(uri, **options)
+    _STORAGES[uri] = storage
+    return storage
 
 def _cast_type(value):
     if isinstance(value, date):
