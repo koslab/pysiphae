@@ -1,6 +1,4 @@
-from pysiphae.interfaces import INavigationProvider, IHomeViewResolver
 from pysiphae.decorators import home_url, navigation
-from zope.interface import implements
 
 @navigation
 def get_navigation(request):

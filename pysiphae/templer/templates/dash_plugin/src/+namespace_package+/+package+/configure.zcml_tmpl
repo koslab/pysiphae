@@ -8,15 +8,4 @@
         name="++static++${project}"
         path="static"/>
 
-    <utility
-        factory=".navigation.NavigationProvider"
-        provides="pysiphae.interfaces.INavigationProvider"
-        name="${project}"/>
-
-    <utility
-        factory=".navigation.HomeViewResolver"
-        provides="pysiphae.interfaces.IHomeViewResolver"
-        name="${project}"/>
-
-
 </configure>

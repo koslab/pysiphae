@@ -12,6 +12,9 @@ class ITemplateVariables(Interface):
 class IStorageFactory(Interface):
     pass
 
+class IConsoleScript(Interface):
+    pass
+
 class ISQLStorage(Interface):
     def connect(**options): pass
     def execute(query, **options): pass
