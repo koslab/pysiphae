@@ -7,7 +7,7 @@ def groupfinder(identity, request):
         result.append('group:LoggedIn')
         if re.match(r'(\w+=.+,?)+', userid):
             userid = userid.split(',')[0].split('=')[1]
-        result.append('user:%s' % id_)
+        result.append('user:%s' % userid)
     if 'memberOf' in identity:
         # ldap memberOf
         for group in identity['memberOf']:
