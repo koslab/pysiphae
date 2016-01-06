@@ -2,6 +2,7 @@ import venusian
 from .interfaces import (
         ITemplateVariables, 
         IHomeUrl, 
+        IStorageFactory,
         INavigationProvider)
 
 def template_variables(wrapped):

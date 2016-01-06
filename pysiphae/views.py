@@ -3,8 +3,7 @@ from pyramid.renderers import get_renderer
 from pyramid.decorator import reify
 from pysiphae.decorators import home_url
 from zope.component import getUtilitiesFor
-from .interfaces import (INavigationProvider,IHomeViewResolver,
-                         ITemplateVariables, IHomeUrl)
+from .interfaces import (INavigationProvider, ITemplateVariables, IHomeUrl)
 from pyramid.httpexceptions import HTTPFound
 from pyramid.security import (remember, forget,  NO_PERMISSION_REQUIRED)
 from repoze.who.api import get_api as get_whoapi
@@ -76,14 +75,8 @@ class Pysiphae(Views):
 
     @view_config(route_name='home', renderer='templates/home.pt')
     def home(self):
-        resolvers = self.request.registry.getUtilitiesFor(IHomeViewResolver)
         identity = self.request.environ['repoze.who.identity']
         groups = groupfinder(identity, self.request)
-        # FIXME: IHomeViewResolver is deprecated
-        for name, resolver in resolvers:
-            url = resolver.resolve(self.request, groups)
-            if url:
-                return HTTPFound(location=url)
         for name, resolver in self.request.registry.getUtilitiesFor(IHomeUrl):
             url = resolver(self.request, groups)
             if url:

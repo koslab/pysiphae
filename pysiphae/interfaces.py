@@ -12,12 +12,12 @@ class ITemplateVariables(Interface):
 class IStorageFactory(Interface):
     pass
 
-class ISQLStore(Interface):
+class ISQLStorage(Interface):
     def connect(**options): pass
     def execute(query, **options): pass
     def close(): pass
 
-class IObjStore(Interface):
+class IObjStorage(Interface):
     def connect(**options): pass
     def insert(obj): pass
     def delete(obj): pass
