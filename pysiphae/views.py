@@ -76,9 +76,9 @@ class Pysiphae(Views):
     @view_config(route_name='home', renderer='templates/home.pt')
     def home(self):
         identity = self.request.environ.get('repoze.who.identity', None)
-        if not identity:
-            return {}
-        groups = groupfinder(identity, self.request)
+        groups = []
+        if identity:
+            groups = groupfinder(identity, self.request)
         for name, resolver in self.request.registry.getUtilitiesFor(IHomeUrl):
             url = resolver(self.request, groups)
             if url:
