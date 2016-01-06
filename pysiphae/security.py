@@ -1,9 +1,13 @@
+import re
+
 def groupfinder(identity, request):
     result = []
     if 'repoze.who.userid' in identity:
-        id_ = identity['repoze.who.userid']
+        userid = identity['repoze.who.userid']
         result.append('group:LoggedIn')
-        result.append('group:%s' % id_)
+        if re.match(r'(\w+=.+,?)+', userid):
+            userid = userid.split(',')[0].split('=')[1]
+        result.append('user:%s' % id_)
     if 'memberOf' in identity:
         # ldap memberOf
         for group in identity['memberOf']:
