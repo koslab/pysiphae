@@ -34,6 +34,8 @@ requires = [
     'thrift',
     'thrift_sasl',
     'pyyaml',
+    'tornado',
+    'argh',
 ]
 
 setup(name='pysiphae',
@@ -65,5 +67,8 @@ setup(name='pysiphae',
 
       [paste.paster_create_template]
       pysiphae_dashplugin = pysiphae.templer:DashPlugin
+
+      [console_scripts]
+      pysiphae_processmgr = pysiphae.processmgr.daemon:main
       """,
       )
