@@ -18,6 +18,10 @@
             }
         };
 
+        var _radiusAccessor = function (d) {
+            return null;
+        };
+
         _chart._doRender = function () {
             // render
             //
@@ -36,14 +40,19 @@
             var groups = _chart._computeOrderedGroups(_chart.data()).filter(function (d) {
                 return _chart.valueAccessor()(d) !== 0;
             });
-
             var data = groups.map(function (d) { 
                 var coord = _chart.coordinateAccessor()(d);
-                return {
+                var value = _chart.valueAccessor()(d);
+                var result = {
                     'x': coord.x,
                     'y': coord.y,
-                    'value': _chart.valueAccessor()(d)
-                }
+                    'value': value
+                };
+                var radius = _chart.radiusAccessor()(d);
+                if (radius != null) {
+                    result['radius'] = radius;
+                };
+                return result;
             });
             _heatmap.setData({'data': data});
         };
@@ -56,7 +65,16 @@
             _coordinate = _;
             return _chart;
         };
-       
+
+        _chart.radiusAccessor = function (_) {
+            if (!arguments.length) {
+                return _radiusAccessor;
+            }
+
+            _radiusAccessor = _;
+            return _chart;
+        };
+
         return _chart.anchor(parent, chartGroup);
     };
 
@@ -81,6 +99,7 @@
             });
             return marker;
         };
+        var _radiusAccessor = function (d) { return null; };
 
         _chart.marker(_marker);
 
@@ -134,11 +153,17 @@
 
             var data = groups.map(function (d) { 
                 var loc = _chart.locationAccessor()(d);
-                return {
+                var value = _chart.valueAccessor()(d);
+                var result = {
                     'lat': loc[0],
                     'lng': loc[1],
-                    'value': _chart.valueAccessor()(d)
-                }
+                    'value': value
+                };
+                var radius = _chart.radiusAccessor()(d);
+                if (radius != null) {
+                    result['radius'] = radius;
+                };
+                return result;
             });
             _heatmapLayer.setData({'data': data});
             _chart._markerRedraw();
@@ -162,6 +187,15 @@
             return _chart;
         };
 
+        _chart.radiusAccessor = function (_) {
+            if (!arguments.length) {
+                return _radiusAccessor;
+            }
+
+            _radiusAccessor = _;
+            return _chart;
+        };
+
         _chart.maxOpacity = function (_) {
             if (!arguments.length) {
                 return _defaultMaxOpacity;
@@ -180,7 +214,6 @@
             _defaultScaleRadius = _;
             return _chart;
         };
-
 
         _chart.useLocalExtrema = function (_) {
             if (!arguments.length) {
