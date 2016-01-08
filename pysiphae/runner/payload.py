@@ -69,7 +69,7 @@ class Payload(object):
         return api.spawn(self.payload(request))
 
     def processes(self, request, api):
-        return api.processes(group=self.name).get(self.name)
+        return api.processes(group=self.name).get(self.name, [])
 
 def payload_factory(name, description, executor='shell', files=None, options=None):
     payload = Payload(name, description, executor, files, options)

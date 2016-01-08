@@ -311,8 +311,8 @@
               </li>
               <!-- Menu Footer-->
               <li class="user-footer">
-                <div class="pull-left" tal:replace="nothing">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+                <div class="pull-left">
+                    <a href="/runner" class="btn btn-default btn-flat">Process Manager</a>
                 </div>
                 <div class="pull-right">
                     <a href="/logout" class="btn btn-default btn-flat">Sign out</a>

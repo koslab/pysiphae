@@ -39,9 +39,13 @@
                                                 tal:attributes="value p['name']"/>
                                             <input type="submit"
                                                 name="form.submitted"
-                                                value="Spawn Process"/>
+                                                value="Run"/>
                                         </form>
                                     </td>
+                                    <td tal:condition="p['running'] != 0">
+                                        RUNNING...
+                                    </td>
+
                                 </tr>
                             </tbody>
                         </table>

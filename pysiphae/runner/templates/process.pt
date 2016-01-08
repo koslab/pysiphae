@@ -1,0 +1,38 @@
+<metal:master use-macro="view.main_template">
+    <metal:style fill-slot="style_slot">
+
+    </metal:style>
+    <metal:header fill-slot="header">
+        <h1>Process Info: <span tal:content="id"></span></h1>
+    </metal:header>
+    <metal:content fill-slot="content">
+        <div class="row" tal:condition="stdout">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        STDOUT
+                    </div>
+                    <div class="panel-body">
+                        <pre tal:content="stdout">
+                        </pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" tal:condition="stderr">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        STDERR
+                    </div>
+                    <div class="panel-body">
+                        <pre tal:content="stderr">
+                        </pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </metal:content>
+
+
+</metal:master>

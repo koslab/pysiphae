@@ -122,11 +122,15 @@ class ProcessList(tornado.web.RequestHandler):
 
 class ProcessDisplay(tornado.web.RequestHandler):
     def get(self, process_id):
-        tracker = get_process_tracker()
-        data = tracker.get(process_id)
+        data = None
+        for tracker in _TRACKERS.values():
+            data = tracker.get(process_id)
+            if data: break
         if not data:
             raise tornado.web.HTTPError(404)
         self.set_header("Content-Type", "application/json")
+        data['stdout-content'] = open(data['stdout']).read()
+        data['stderr-content'] = open(data['stderr']).read()
         self.write(json.dumps(data))
 
 class Tail(tornado.websocket.WebSocketHandler):

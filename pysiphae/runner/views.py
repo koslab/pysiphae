@@ -2,6 +2,7 @@ from pysiphae.views import Views
 from pysiphae.interfaces import IProcessPayload
 from pysiphae.interfaces import IProcessManager
 from pyramid.view import view_config, forbidden_view_config
+import json
 
 class RunnerViews(Views):
     
@@ -32,14 +33,31 @@ class RunnerViews(Views):
             'payloads': result
         }
 
-    @view_config(route_name='pysiphae.runner.process', 
-            renderer='templates/process.pt',
+    @view_config(route_name='pysiphae.runner.group', 
+            renderer='templates/group.pt',
             permission='pysiphae.ViewRunner')
-    def process_view(self):
+    def group_view(self):
         name = self.request.matchdict['name']
         api = self.request.registry.getUtility(IProcessManager)
         return {
             'name': name,
             'processes': api.processes(name).get(name)
+        }
+
+    @view_config(route_name='pysiphae.runner.process', 
+            renderer='templates/process.pt',
+            permission='pysiphae.ViewRunner')
+    def process_view(self):
+        name = self.request.matchdict['name']
+        process_id = self.request.matchdict['process_id']
+        api = self.request.registry.getUtility(IProcessManager)
+        process_data = api.process(process_id)
+        return {
+            'name': name,
+            'id': process_id,
+            'start': process_data['start'],
+            'end': process_data['end'],
+            'stdout': process_data['stdout-content'],
+            'stderr': process_data['stderr-content']
         }
 

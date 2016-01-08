@@ -6,9 +6,11 @@
     <route name="pysiphae.runner"
         pattern="/runner"/>
 
-    <route name="pysiphae.runner.process"
+    <route name="pysiphae.runner.group"
         pattern="/runner/{name}"/>
 
+    <route name="pysiphae.runner.process"
+        pattern="/runner/{name}/{process_id}"/>
 
 </configure>
 

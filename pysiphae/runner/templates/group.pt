@@ -1,0 +1,43 @@
+<metal:master use-macro="view.main_template">
+    <metal:style fill-slot="style_slot">
+
+    </metal:style>
+    <metal:header fill-slot="header">
+        <h1>Process Info: <span tal:content="name"></span></h1>
+    </metal:header>
+    <metal:content fill-slot="content">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Values
+                    </div>
+                    <div class="panel-body">
+                        <table class="table">
+                            <thead>
+                                <th>ID</th>
+                                <th>Start Time</th>
+                                <th>End Time</th>
+                                <th>Status</th>
+                            </thead>
+                            <tbody>
+                                <tr tal:repeat="p processes">
+                                    <td>
+                                        <a tal:attributes="href string:/runner/${name}/${p['_id']}"
+                                            tal:content="p['_id']"></a>
+                                    </td>
+                                    <td tal:content="p['start']"></td>
+                                    <td tal:content="p['end']"></td>
+                                    <td tal:content="p['state']"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </metal:content>
+
+
+</metal:master>
