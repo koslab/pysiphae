@@ -28,7 +28,9 @@
                                         <a tal:attributes="href string:/runner/${p['name']}"
                                             tal:content="p['name']"></a>
                                     </td>
-                                    <td tal:content="p['description']"></td>
+                                    <td>
+                                        <a tal:attributes="href string:/runner/${p['name']}"
+                                            tal:content="p['description']"></a></td>
                                     <td tal:content="p['type']"></td>
                                     <td tal:content="p['running']"></td>
                                     <td tal:content="p['stopped']"></td>
