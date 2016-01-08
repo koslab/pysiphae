@@ -12,6 +12,9 @@ class ITemplateVariables(Interface):
 class IStorageFactory(Interface):
     pass
 
+class IProcessManager(Interface):
+    pass
+
 class IProcessPayload(Interface):
     name = Attribute('Name')
     type = Attribute('Type of payload (eg: pyspark, hive)')

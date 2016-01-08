@@ -16,6 +16,7 @@
                         <table class="table">
                             <thead>
                                 <th>Name</th>
+                                <th>Description</th>
                                 <th>Type</th>
                                 <th>Running</th>
                                 <th>Stopped</th>
@@ -23,6 +24,7 @@
                             <tbody>
                                 <tr tal:repeat="p payloads">
                                     <td tal:content="p['name']"></td>
+                                    <td tal:content="p['description']"></td>
                                     <td tal:content="p['type']"></td>
                                     <td tal:content="p['running']"></td>
                                     <td tal:content="p['stopped']"></td>

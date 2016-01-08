@@ -2,6 +2,7 @@ from pyramid.config import Configurator
 from ConfigParser import ConfigParser
 from zope.component import getSiteManager
 from pysiphae.root import root_factory
+from pysiphae.runner.payload import ProcessManager
 
 def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
@@ -15,6 +16,12 @@ def main(global_config, **settings):
     if default_permission:
         config.set_default_permission(default_permission)
     config.set_root_factory(root_factory)
+
+    config.registry.registerUtility(
+        ProcessManager(
+            settings.get('pysiphae.processmgr.url', 
+                'http://localhost:8888')))
+
     config.add_static_view('++static++', 'static', cache_max_age=3600)
     config.add_route('home','/')
     config.add_route('login','/login')
