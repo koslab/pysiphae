@@ -39,9 +39,11 @@ class RunnerViews(Views):
     def group_view(self):
         name = self.request.matchdict['name']
         api = self.request.registry.getUtility(IProcessManager)
+        procs = api.processes(name).get(name)
+        procs = sorted(procs, key=lambda x: x['start'], reverse=True)
         return {
             'name': name,
-            'processes': api.processes(name).get(name)
+            'processes': procs
         }
 
     @view_config(route_name='pysiphae.runner.process', 

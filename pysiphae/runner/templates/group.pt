@@ -3,7 +3,7 @@
 
     </metal:style>
     <metal:header fill-slot="header">
-        <h1>Process Info: <span tal:content="name"></span></h1>
+        <h1>Group Info: <span tal:content="name"></span></h1>
     </metal:header>
     <metal:content fill-slot="content">
         <div class="row">
