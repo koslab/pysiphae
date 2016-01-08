@@ -39,7 +39,7 @@ class RunnerViews(Views):
     def group_view(self):
         name = self.request.matchdict['name']
         api = self.request.registry.getUtility(IProcessManager)
-        procs = api.processes(name).get(name)
+        procs = api.processes(name).get(name, [])
         procs = sorted(procs, key=lambda x: x['start'], reverse=True)
         return {
             'name': name,
