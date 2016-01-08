@@ -31,3 +31,15 @@ class RunnerViews(Views):
         return {
             'payloads': result
         }
+
+    @view_config(route_name='pysiphae.runner.process', 
+            renderer='templates/process.pt',
+            permission='pysiphae.ViewRunner')
+    def process_view(self):
+        name = self.request.matchdict['name']
+        api = self.request.registry.getUtility(IProcessManager)
+        return {
+            'name': name,
+            'processes': api.processes(name).get(name)
+        }
+
