@@ -35,7 +35,7 @@ class ProcessManager(object):
 
     def spawn(self, payload):
         url = self.url('spawn')
-        r = requests.post(url, files=payload['files'], json=payload['json'])
+        r = requests.post(url, json=payload)
         return r.json()
 
 
@@ -48,21 +48,24 @@ class Payload(object):
         self.description = description
         self.executor = executor
         self.options = options or {}
-        self.files = []
-        files = files or []
-        for f in files:
-            fd = asset.load(f)
-            fname = os.path.basename(f)
-            self.files.append((fname,fd))
+        self.files = files or []
+
         
     def payload(self, request):
+        files = []
+        for f in self.files:
+            a = asset.load(f)
+            fd = open(a.filename, 'rb')
+            fname = os.path.basename(a.filename)
+            files.append({
+                'filename': fname,
+                'body': base64.b64encode(fd.read())
+            })
         return {
-            'files': self.files,
-            'json': { 
-                'group': self.name,
-                'executor': self.executor,
-                'options': self.options
-            }
+            'group': self.name,
+            'executor': self.executor,
+            'options': self.options,
+            'files': files
         }
 
     def launch(self, request, api):
@@ -77,11 +80,3 @@ def payload_factory(name, description, executor='shell', files=None, options=Non
         scanner.config.registry.registerUtility(obj, IProcessPayload, obj.name)
     venusian.attach(payload, callback)
     return payload
-
-uname_payload = payload_factory(
-    name='uname',
-    description='Get the uname of the process manager host',
-    executor='shell',
-    options={
-        'command': ['uname','-a']
-    })

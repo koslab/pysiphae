@@ -7,6 +7,7 @@ from uuid import uuid4
 import json
 import tempfile
 import os
+import base64
 
 _TRACKERS={}
 EXECUTORS={}
@@ -47,14 +48,23 @@ class ProcessSpawner(object):
         self.output_dir = tempfile.mkdtemp()
         self.registry = registry or {}
 
-    def spawn(self, command):
+    def spawn(self, command, files=None):
+        files = files or []
         _id = uuid4().hex
-        outlog = os.path.join(self.output_dir, '%s-stdout.log' % _id)
-        errlog = os.path.join(self.output_dir, '%s-stderr.log' % _id)
+        process_dir = os.path.join(self.output_dir, _id)
+        os.mkdir(process_dir)
+
+        for f in files:
+            fpath = os.path.join(process_dir, f['filename'])
+            with open(fpath, 'wb') as fd:
+                fd.write(base64.b64decode(f['body']))
+        outlog = os.path.join(process_dir, 'stdout.log')
+        errlog = os.path.join(process_dir, 'stderr.log')
+
         with open(outlog, 'wb') as out, open(errlog, 'wb') as err:
             if isinstance(command, str):
                 command = command.split()
-            p = Subprocess(command, stdout=out, stderr=err)
+            p = Subprocess(command, stdout=out, stderr=err, cwd=process_dir)
 
         datum = {
             '_id': _id,
@@ -84,7 +94,7 @@ class ShellExecutor(object):
 
     def run(self, group, files):
         spawner = ProcessSpawner(group)
-        return spawner.spawn(self.command)
+        return spawner.spawn(self.command, files)
 
 EXECUTORS['shell'] = ShellExecutor
 
@@ -97,7 +107,7 @@ class SpawnHandler(tornado.web.RequestHandler):
             raise tornado.web.HTTPError(400)
         options = data.get('options', {})
         e = EXECUTORS[executor](**options)
-        result = e.run(group, self.request.files)
+        result = e.run(group, data.get('files', []))
         self.set_header("Content-Type", "application/json")
         self.write(json.dumps(result, indent=4))
 
