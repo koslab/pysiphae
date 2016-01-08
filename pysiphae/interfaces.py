@@ -1,4 +1,4 @@
-from zope.interface import Interface
+from zope.interface import Interface, Attribute
 
 class INavigationProvider(Interface):
     pass
@@ -12,8 +12,11 @@ class ITemplateVariables(Interface):
 class IStorageFactory(Interface):
     pass
 
-class IConsoleScript(Interface):
-    pass
+class IProcessPayload(Interface):
+    name = Attribute('Name')
+    type = Attribute('Type of payload (eg: pyspark, hive)')
+    files = Attribute('List of path of files to submit')
+    options = Attribute('Mapping of additional options to pass to executor')
 
 class ISQLStorage(Interface):
     def connect(**options): pass

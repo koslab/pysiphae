@@ -77,8 +77,7 @@ class SpawnHandler(tornado.web.RequestHandler):
     def post(self):
         command = self.get_argument('command', None)
         if not command:
-            self.write(json.dumps({'error': 'invalid command'}))
-            return
+            raise tornado.web.HTTPError(400)
 
         spawner = ProcessSpawner()
         data = spawner.spawn(command)
