@@ -36,6 +36,8 @@ requires = [
     'pyyaml',
     'tornado',
     'argh',
+    'asset',
+    'requests'
 ]
 
 setup(name='pysiphae',

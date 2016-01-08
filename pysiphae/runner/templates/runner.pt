@@ -1,0 +1,50 @@
+<metal:master use-macro="view.main_template">
+    <metal:style fill-slot="style_slot">
+
+    </metal:style>
+    <metal:header fill-slot="header">
+        <h1>Registered Scripts</h1>
+    </metal:header>
+    <metal:content fill-slot="content">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Payloads
+                    </div>
+                    <div class="panel-body">
+                        <table class="table">
+                            <thead>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Running</th>
+                                <th>Stopped</th>
+                            </thead>
+                            <tbody>
+                                <tr tal:repeat="p payloads">
+                                    <td tal:content="p['name']"></td>
+                                    <td tal:content="p['type']"></td>
+                                    <td tal:content="p['running']"></td>
+                                    <td tal:content="p['stopped']"></td>
+                                    <td>
+                                        <form method="post">
+                                            <input type="hidden" 
+                                                name="payload"
+                                                tal:attributes="value p['name']"/>
+                                            <input type="submit"
+                                                name="form.submitted"
+                                                value="Submit"/>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </metal:content>
+
+
+</metal:master>
