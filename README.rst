@@ -12,7 +12,7 @@ Creating a dash plugin project
 
 Initialize::
 
-    templer pysiphae_dashplugin mynamespace.myproject
+    templer pysiphae_project mynamespace.myproject
     cd mynamespace.myproject/
     virtualenv venv/
     ./venv/bin/python bootstrap-buildout.py

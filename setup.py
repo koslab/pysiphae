@@ -68,7 +68,7 @@ setup(name='pysiphae',
       main = pysiphae.wsgi:main
 
       [paste.paster_create_template]
-      pysiphae_dashplugin = pysiphae.templer:DashPlugin
+      pysiphae = pysiphae.templer:Project
 
       [console_scripts]
       pysiphae_processmgr = pysiphae.processmgr.daemon:main
