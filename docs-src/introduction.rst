@@ -50,6 +50,16 @@ Architecture
     compound=true;
     graph [splines=ortho];
     node [shape=component];
+
+    subgraph cluster_tools {
+        node [shape=box];
+        templer [label="pysiphae.templer\n(Code Generator)"];
+        buildout [label="buildout\n(Environment\nBuilder)"];
+        ansible [label="ansible\n(Deployment Tool)"];
+        bower [label="bower\n(Javascript\nPkgMgr)"];
+        label="CLI Tools"
+    }
+
     subgraph cluster_registries {
         viewplugin [label="View Plugin", shape=box3d];
         authplugin [label="Authentication Plugin", shape=box3d];
@@ -63,34 +73,36 @@ Architecture
     }
 
     subgraph cluster_proxy {
-        proxy [label=<node-http-proxy<br/>(Routing Proxy)>];
+        proxy [label="node-http-proxy\n(Routing Proxy)"];
         color="black";
         label="Proxy Service";
     }
     subgraph cluster_processmgr {
-        procmgr [label=<pysiphae.processmgr<br/>(Process Manager)>];   
+        procmgr [label="pysiphae.processmgr\n(Process Manager)"];   
         color="black";
-        label="Process Execution Service";
+        label="Process Execution\nService";
     }
     subgraph cluster_web {
         { rank=same;
-            wsgi [label=<pysiphae.wsgi<br/>(Web Application)>];
+            wsgi [label="pysiphae.wsgi\n(Web Application)"];
         }
         { rank=same;
-            views [label=<pysiphae.views<br/>(Core Views)>];
-            runner [label=<pysiphae.runner<br/>(Process Runner)>];
+            views [label="pysiphae.views\n(Core Views)"];
+            runner [label="pysiphae.runner\n(Process Runner)"];
         }
-        pyramid [shape=folder,label=<Pyramid<br/>(Base Framework)>];
-        auth [label=<repoze.who<br/>(Authorization)>];
-        registry [label=<zope.components<br/>(Component Registry)>];
-        storages [label=<pysiphae.storages<br/>(Storage Factories)>];
+        pyramid [shape=folder,label="Pyramid\n(Base Framework)"];
+        auth [label="repoze.who\n(Authorization)"];
+        registry [label="zope.components\n(Component Registry)"];
+        storages [label="pysiphae.storages\n(Storage Factories)"];
         color="black";
-        label="Web Service";
+        label="Web Application\nService";
     }
+
     browser [shape=ellipse, label="Web Browser"];
+    buildout -- browser [ltail=cluster_tools, style=invis];
     browser -- proxy [lhead=cluster_proxy];
     proxy -- wsgi;
-    proxy -- procmgr [lhead=cluster_processmgr];
+    proxy -- procmgr;
     wsgi -- auth;
     auth -- views;
     wsgi -- views;
