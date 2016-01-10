@@ -13,7 +13,7 @@ pipeline =
 use = egg:repoze.who#config
 config_file = %(here)s/who-dev.ini
 log_file = stdout
-log_level = info
+log_level = error
 
 [filter:gzip]
 use = egg:Paste#gzip
@@ -30,8 +30,28 @@ pyramid.default_locale_name = en
 pyramid.includes =
     pyramid_debugtoolbar
 
+# Project Title
+
+pysiphae.title = ${project}
+
+# Plugins 
 pysiphae.plugins =
     ${project}
+
+pysiphae.home_urls =
+    group:LoggedIn=${project}
+
+# Enable Authentication
+# 
+# pysiphae.default_permission = pysiphae.View
+# pysiphae.acl =
+#    Allow,group:LoggedIn,pysiphae.View
+#
+#
+# Set roles
+#
+# pysiphae.roles =
+#    username=group:groupname0,group:groupname1
 
 # By default, the toolbar only appears for clients from IP addresses
 # '127.0.0.1' and '::1'.
