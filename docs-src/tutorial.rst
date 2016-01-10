@@ -74,6 +74,7 @@ Once you have templer with pysiphae installed, you can initialize your project
 using::
 
     templer pysiphae example.dengueviz
+    cd example.dengueviz
 
 .. note::
 
@@ -112,12 +113,52 @@ included in your template to simplify the build process::
 Getting dataset
 ----------------
 
-.. todo::
-   
-   document steps to get sample data here
+For this tutorial We will be using a sample dengue cases dataset coming from 
+Malaysian Government Open Data, contributed by Ministry of Health Malaysia. 
 
-Creating a dashboard view
---------------------------
+Let download the file for this tutorial::
+
+    wget https://raw.githubusercontent.com/koslab/pysiphae/master/sample_data/dengue-hotspot.jsonl -O src/example/dengueviz/dengue-hotspot.jsonl
+
+Following are descriptions of each fields in the data
+
+* `year` - year of outbreak
+* `week` - the `epidemiological week <http://www.cmmcp.org/epiweek.htm` of
+  outbreak
+* `locality` - location of outbreak
+* `district_zone_pbt` - district/zone/pbt of location
+* `state` - state which the location belong in
+* `length_of_outbreak_days` - length of outbreak
+* `total_accumulated_cases` - total cases in data point
+
+    
+Creating A Simple Dashboard
+----------------------------
+
+A simple pysiphae dashboard will consist of the following components:
+
+.. graphviz::
+
+   graph components {
+        graph [splines=ortho, rankdir=RL];
+        node [shape=component];
+        browser [shape=ellipse];
+        view [label="View"];
+        template [label="TAL Template"];
+        jsonview [label="JSON View"];
+        data [shape=box3d, label="Data Store"];
+        js [label="Visualization JS"];
+        pysiphae [shape=folder, label="Pysiphae"];
+        browser -- template;
+        template -- view;
+        template -- js;
+        js -- jsonview;
+        jsonview -- data;
+        view -- pysiphae;
+        jsonview -- pysiphae;
+   }
+
+
 
 Registering navigation elements
 -------------------------------
