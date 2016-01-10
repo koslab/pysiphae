@@ -123,7 +123,7 @@ Let download the file for this tutorial::
 Following are descriptions of each fields in the data
 
 * `year` - year of outbreak
-* `week` - the `epidemiological week <http://www.cmmcp.org/epiweek.htm` of
+* `week` - the `epidemiological week <http://www.cmmcp.org/epiweek.htm>`_ of
   outbreak
 * `locality` - location of outbreak
 * `district_zone_pbt` - district/zone/pbt of location
@@ -158,6 +158,69 @@ A simple pysiphae dashboard will consist of the following components:
         jsonview -- pysiphae;
    }
 
+Transforming Data And Publish as JSON
+++++++++++++++++++++++++++++++++++++++
+
+Before starting to develop visualization, we need to prepare our dataset in a
+format that can be visualized. For the sake of this tutorial, we are only
+interested with date, state, and case count. We also need to publish our data
+into JSON or CSV format for the consumption of DC.js visualization library. 
+
+Our dataset come with many fields that we dont need, and come in JSONLines
+format. So lets create a view that will do some preprocessing on the data,
+transform them and publish as JSON.
+
+.. note::
+
+   While in this tutorial we do our data transformation in a view, it is not
+   exactly a good practice to do it this way, especially when you are dealing
+   with massive datasets. Best practice is to preprocess your data in your 
+   data system first and only load processed/prepared data from your dashboard
+   application
+
+By default pysiphae already generated a blank view for your application. We
+will use that view for our dashboard elements, while JSON will be published by
+a separate view.
+
+First we will need to register a route for the JSON view. Edit
+`src/example/dengueviz/routes.zcml` and add these lines:
+
+.. code-block:: xml
+
+   <route name="example.dengueviz.json"
+         pattern="/example.dengueviz.json"/>
+
+Edit `src/example/dengueviz/view.py` and add these lines in the `Views` class.
+
+.. code-block:: python
+
+   @view_config(route_name='example.dengueviz.json',
+                renderer='json')
+   def json_view(self):
+       # load data into memory
+       f = asset.load('example.dengueviz:dengue-hotspot.jsonl')
+       data = [json.loads(l) for l in f]
+    
+       # select only fields we want
+       data = [{'epiweek': d['week'],
+                'year': d['year'],
+                'state': d['state'].upper(),
+                'count': d['total_accumulated_cases']} for d in data]
+
+       # publish
+       return data
+
+.. seealso::
+   
+   `Pyramid Route Pattern Syntax <http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/urldispatch.html#route-pattern-syntax>`_
+        URL Route patterns documentation.
+
+   `Pyramid View <http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/views.html>`_
+        Pyramid Views documentations. Please take note that Pysiphae uses
+        views that are attached to classes.
+   
+   `Asset <https://pypi.python.org/pypi/asset/>`_
+        Asset library documentation.
 
 
 Registering navigation elements
