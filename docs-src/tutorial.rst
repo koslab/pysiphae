@@ -43,7 +43,9 @@ Setting up your environment
 Installing Pysiphae
 ++++++++++++++++++++
 
-To install pysiphae, run::
+To install pysiphae, run:
+
+.. code-block:: bash
 
     pip install git+https://github.com/koslab/pysiphae.git
 
@@ -53,9 +55,10 @@ To install pysiphae, run::
    development, once the first release is available in pypi.python.org, please
    install from there.
 
-After installation, you should be getting `templer` command installed. Templer
-is a code template generator created by Plone community, based on Python Paste.
-You can invoke this command to generate your first Pysiphae project.
+After installation, you should be getting ``templer`` command installed. 
+Templer is a code template generator created by Plone community, based on 
+Python Paste. You can invoke this command to generate your first Pysiphae 
+project.
 
 
 .. seealso::
@@ -71,20 +74,24 @@ Creating Your First Pysiphae Project
 +++++++++++++++++++++++++++++++++++++
 
 Once you have templer with pysiphae installed, you can initialize your project
-using::
+using:
 
-    templer pysiphae example.dengueviz
-    cd example.dengueviz
+.. code-block:: bash
+
+   templer pysiphae example.dengueviz
+   cd example.dengueviz
 
 .. note::
 
    `example.dengueviz` is your project name. You may change the name to a
    different one
 
-After creating the template, let build it dependencies. A `build.sh` script is
-included in your template to simplify the build process::
+After creating the template, let build it dependencies. A ``build.sh`` script 
+is included in your template to simplify the build process:
 
-    bash -e build.sh
+.. code-block:: bash
+
+   bash -e build.sh
 
 .. note::
 
@@ -116,20 +123,23 @@ Getting dataset
 For this tutorial We will be using a sample dengue cases dataset coming from 
 Malaysian Government Open Data, contributed by Ministry of Health Malaysia. 
 
-Let download the file for this tutorial::
+Let download the file for this tutorial:
 
-    wget https://raw.githubusercontent.com/koslab/pysiphae/master/sample_data/dengue-hotspot.jsonl -O src/example/dengueviz/dengue-hotspot.jsonl
+.. code-block:: bash
+
+   wget https://raw.githubusercontent.com/koslab/pysiphae/master/sample_data/dengue-hotspot.jsonl \
+        -O src/example/dengueviz/dengue-hotspot.jsonl
 
 Following are descriptions of each fields in the data
 
-* `year` - year of outbreak
-* `week` - the `epidemiological week <http://www.cmmcp.org/epiweek.htm>`_ of
+* ``year`` - year of outbreak
+* ``week`` - the `epidemiological week <http://www.cmmcp.org/epiweek.htm>`_ of
   outbreak
-* `locality` - location of outbreak
-* `district_zone_pbt` - district/zone/pbt of location
-* `state` - state which the location belong in
-* `length_of_outbreak_days` - length of outbreak
-* `total_accumulated_cases` - total cases in data point
+* ``locality`` - location of outbreak
+* ``district_zone_pbt`` - district/zone/pbt of location
+* ``state`` - state which the location belong in
+* ``length_of_outbreak_days`` - length of outbreak
+* ``total_accumulated_cases`` - total cases in data point
 
     
 Creating A Simple Dashboard
@@ -183,14 +193,14 @@ will use that view for our dashboard elements, while JSON will be published by
 a separate view.
 
 First we will need to register a route for the JSON view. Edit
-`src/example/dengueviz/routes.zcml` and add these lines:
+``src/example/dengueviz/routes.zcml`` and add these lines:
 
 .. code-block:: xml
 
    <route name="example.dengueviz.json"
          pattern="/example.dengueviz.json"/>
 
-Edit `src/example/dengueviz/view.py` and add these lines in the `Views` class.
+Edit ``src/example/dengueviz/view.py`` and add these lines in the ``Views`` class.
 
 .. code-block:: python
 
@@ -209,6 +219,12 @@ Edit `src/example/dengueviz/view.py` and add these lines in the `Views` class.
 
        # publish
        return data
+
+.. todo::
+
+   * include epiweek.py for resolving epiweek date
+   * create dashboard html
+   * create dashboard javascript 
 
 .. seealso::
    
