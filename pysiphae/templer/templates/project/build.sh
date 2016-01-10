@@ -1,5 +1,7 @@
 #!/bin/bash -e
 
+which bower
+which virtualenv
 if [ ! -e ./venv/bin/python ];then
     virtualenv venv
 fi

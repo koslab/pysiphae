@@ -70,7 +70,44 @@ You can invoke this command to generate your first Pysiphae project.
 Creating Your First Pysiphae Project
 +++++++++++++++++++++++++++++++++++++
 
-Once you have templer with pysiphae installed
+Once you have templer with pysiphae installed, you can initialize your project
+using::
+
+    templer pysiphae example.dengueviz
+
+.. note::
+
+   `example.dengueviz` is your project name. You may change the name to a
+   different one
+
+After creating the template, let build it dependencies. A `build.sh` script is
+included in your template to simplify the build process::
+
+    bash -e build.sh
+
+.. note::
+
+   You will need the following system dependencies to build pysiphae
+   successfully on a Fedora/CentOS/RHEL systems. On debian based systems,
+   please install their equivalent
+
+   * python-devel
+   * mysql-devel
+   * cyrus-sasl-devel
+   * openldap-devel
+   * gcc-c++
+   * python-virtualenv
+   * npm
+
+   You will also need to install bower::
+
+     sudo npm install -g bower
+
+.. warning::
+
+   At the current state, the project template uses pysiphae master from github, 
+   which is not recommended for production use. This will be changed after our
+   first official release.
 
 Getting dataset
 ----------------
