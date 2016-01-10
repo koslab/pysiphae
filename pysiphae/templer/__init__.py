@@ -11,3 +11,5 @@ class Project(BasicNamespace):
     for v in vars:
         if v.name=='license_name':
             v.default='MIT'
+        if v.name=='url':
+            v.default='http://github.com/'
