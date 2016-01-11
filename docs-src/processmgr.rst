@@ -13,6 +13,23 @@ A process manager UI is included in Pysiphae dashboard for executing the jobs
    The process management server does not have authentication. ONLY run it in a
    secure environment.
 
+
+Enabling Process Manager View
+=============================
+
+Process Manager module depends on Authentication to be configured in your
+Pysiphae installation. Refer to Authentication section for steps to enable
+authentication.
+
+Additionally, you will need to also grant ``pysiphae.processmgr.View`` ACL to
+your users. Add this into ``development.ini``
+
+.. code-block:: ini
+   
+   pysiphae.acl =
+         Allow,group:LoggedIn,pysiphae.processmgr.View
+
+   
 Registering Process Payload
 ============================
 
