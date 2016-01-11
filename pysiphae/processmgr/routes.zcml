@@ -1,0 +1,16 @@
+<configure xmlns="http://pylonshq.com/pyramid"
+    xmlns:zcml="http://namespaces.zope.org/zcml">
+
+    <include package="pyramid_zcml"/>
+
+    <route name="pysiphae.processmgr"
+        pattern="/processmgr"/>
+
+    <route name="pysiphae.processmgr.group"
+        pattern="/processmgr/{name}"/>
+
+    <route name="pysiphae.processmgr.process"
+        pattern="/processmgr/{name}/{process_id}"/>
+
+</configure>
+

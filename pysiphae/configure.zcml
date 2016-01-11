@@ -2,7 +2,7 @@
     xmlns:zcml="http://namespaces.zope.org/zcml">
 
     <include package="pyramid_zcml"/>
-    <include package=".runner"/>
+    <include package=".processmgr"/>
 
     <repozewho1authenticationpolicy
         identifier_name="auth_tkt"
