@@ -244,7 +244,7 @@ Edit ``src/example/dengueviz/views.py`` and add these lines:
    def json_view(self):
        # load data into memory
        f = asset.load('example.dengueviz:dengue-hotspot.jsonl')
-       data = [json.loads(l) for l in f]
+       data = [json.loads(l) for l in open(f.filename)]
     
        # select only fields we want
        data = [{'epiweek': d['week'],
