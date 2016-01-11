@@ -14,6 +14,7 @@ doing what they do best - preparing and visualizing data.
    :maxdepth: 2
 
    introduction
+   architecture
    tutorial
    advanced
 
