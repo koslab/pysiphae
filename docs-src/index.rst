@@ -17,6 +17,7 @@ doing what they do best - preparing and visualizing data.
    architecture
    tutorial
    advanced
+   processmgr
 
 
 Indices and tables
