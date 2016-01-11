@@ -59,6 +59,11 @@ htpasswd authentication. Uncomment them to enable.
    pysiphae.roles =
       username=group:groupname0,group:groupname1
    
+To add a user into htpasswd, use the following command:
+
+.. code-block:: bash
+
+   htpasswd -d htpasswd <username>
 
 LDAP
 ----
