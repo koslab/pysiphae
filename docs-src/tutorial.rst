@@ -392,9 +392,3 @@ visualization should appear on that page.
    `dc-addons <https://github.com/Intellipharm/dc-addons>`_
         Additional charts for DC.js
 
-Registering navigation elements
-===============================
-
-Setting dashboard as home view
-===============================
-
