@@ -93,6 +93,13 @@ is included in your template to simplify the build process:
 
    bash -e build.sh
 
+After a successful build, you can start the application server using the
+following command:
+
+.. code-block:: bash
+
+   ./bin/pserve development.ini
+
 .. note::
 
    You will need the following system dependencies to build pysiphae
