@@ -1,3 +1,4 @@
+=====================================================
 Tutorial: Building A Dengue Visualization Dashboard
 =====================================================
 
@@ -38,10 +39,10 @@ on Pysiphae
 
 
 Setting up your environment
-----------------------------
+============================
 
 Installing Pysiphae
-++++++++++++++++++++
+--------------------
 
 To install pysiphae, run:
 
@@ -71,7 +72,7 @@ project.
      http://templer-manual.readthedocs.org/en/latest/
 
 Creating Your First Pysiphae Project
-+++++++++++++++++++++++++++++++++++++
+-------------------------------------
 
 Once you have templer with pysiphae installed, you can initialize your project
 using:
@@ -83,7 +84,7 @@ using:
 
 .. note::
 
-   `example.dengueviz` is your project name. You may change the name to a
+   ``example.dengueviz`` is your project name. You may change the name to a
    different one
 
 After creating the template, let build it dependencies. A ``build.sh`` script 
@@ -99,6 +100,8 @@ following command:
 .. code-block:: bash
 
    ./bin/pserve development.ini
+
+The server should be running at http://localhost:6543. To stop the server, press ``CTRL+C``
 
 .. note::
 
@@ -125,7 +128,7 @@ following command:
    first official release.
 
 Getting dataset
-----------------
+================
 
 For this tutorial We will be using a sample dengue cases dataset coming from 
 Malaysian Government Open Data, contributed by Ministry of Health Malaysia. 
@@ -150,7 +153,7 @@ Following are descriptions of each fields in the data
 
     
 Creating A Simple Dashboard
-----------------------------
+============================
 
 A simple pysiphae dashboard will consist of the following components:
 
@@ -176,7 +179,7 @@ A simple pysiphae dashboard will consist of the following components:
    }
 
 Transforming Data And Publish as JSON
-++++++++++++++++++++++++++++++++++++++
+--------------------------------------
 
 Before starting to develop visualization, we need to prepare our dataset in a
 format that can be visualized. For the sake of this tutorial, we are only
@@ -207,7 +210,24 @@ First we will need to register a route for the JSON view. Edit
    <route name="example.dengueviz.json"
          pattern="/example.dengueviz.json"/>
 
-Edit ``src/example/dengueviz/view.py`` and add these lines in the ``Views`` class.
+Looking at the data, we can see that we need to convert the epiweeks to
+datetime for visualizing as a time series data. There is a python module for
+this in github, let download it into our project.
+
+.. code-block:: bash
+
+   wget https://gist.githubusercontent.com/kagesenshi/2c53e855e776472723f4/raw/59ce71b7c6dbc027a5abfa4d9cba68bb9d58b801/epiweek.py \
+        -O src/example/dengueviz/epiweek.py
+
+Edit ``src/example/dengueviz/view.py`` and add these lines:
+
+* at the top of the file:
+
+.. code-block:: python
+
+   import epiweek
+
+* in the ``Views`` class.
 
 .. code-block:: python
 
@@ -220,6 +240,8 @@ Edit ``src/example/dengueviz/view.py`` and add these lines in the ``Views`` clas
     
        # select only fields we want
        data = [{'epiweek': d['week'],
+                'date': epiweek.first_day(d['week'],
+                                d['year']).strftime('%Y-%m-%d'),
                 'year': d['year'],
                 'state': d['state'].upper(),
                 'count': d['total_accumulated_cases']} for d in data]
@@ -227,11 +249,11 @@ Edit ``src/example/dengueviz/view.py`` and add these lines in the ``Views`` clas
        # publish
        return data
 
-.. todo::
+Start the server and using your browser, load
+http://localhost:6543/example.dengueviz.json
 
-   * include epiweek.py for resolving epiweek date
-   * create dashboard html
-   * create dashboard javascript 
+You should be getting a JSON output. We will use this JSON output for the
+dashboard.
 
 .. seealso::
    
@@ -246,9 +268,133 @@ Edit ``src/example/dengueviz/view.py`` and add these lines in the ``Views`` clas
         Asset library documentation.
 
 
+
+
+Create Dashboard View
+----------------------
+
+In ``src/example/dengueviz/view.py``, you will see that there is already one
+view under the name as ``default_view``. The view's template is in
+``src/example/dengueviz/templates/default.pt``.
+
+We want to develop a simple dashboard with 2 chart elements, a line chart 
+showing case count, and a row chart showing states.
+
+Clear the contents of ``default.pt`` and replace with this:
+
+.. code-block:: xml
+
+   <metal:master use-macro="view.main_template">
+       <metal:style fill-slot="style_slot">
+           // put CSS here
+       </metal:style>
+       <metal:header fill-slot="header">
+           <h1>Dengue Visualization</h1>
+       </metal:header> 
+       <metal:content fill-slot="content">
+            <div class="row">
+                <div class="col-lg-8 col-sm-8">
+                    <div class="panel panel-default">
+                        <div class="panel-header">
+                            Cases Over Time
+                        </div>
+                        <div class="panel-body">
+                            <div id="casetime-chart"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-4">
+                    <div class="panel panel-default">
+                        <div class="panel-header">
+                            States
+                        </div>
+                        <div class="panel-body">
+                            <div id="state-chart"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>    
+       </metal:content>
+       <metal:script fill-slot="javascript_footer_slot">
+            <script src="/++static++example.dengueviz/default.js"></script>
+       </metal:script>
+   <metal:master>
+
+Following is a description of the template above:
+
+* Create a layout for dashboard elements:
+
+  * ``#casetime-chart`` - placeholder for case over time chart
+  * ``#state-chart`` - placeholder for state row chart
+
+* Include javascript for rendering charts
+
+Now let create javascript code for rendering the charts:
+
+.. code-block:: javascript
+
+   var caseTimeChart = dc.lineChart('#casetime-chart');
+   var stateChart = dc.rowChart('#state-chart');
+
+   d3.json('/example.dengueviz.json', function (data) {
+       var ndx = crossfilter(data);
+       var timeDim = ndx.dimension(function (d) { 
+            return new Date(d.date);
+       });
+       var timeCount = timeDim.group().reduceSum(function (d) { 
+            return d.count;
+       });
+
+       caseTimeChart.options({
+            height: 500,
+            width: 700,
+            dimension: timeDim,
+            group: timeCount,
+            x: d3.time.scale(),
+            elasticX: true
+       });
+
+       caseTimeChart.render();
+
+       var stateDim = ndx.dimension(function (d) { return d.state });
+       var stateCount = stateDim.group().reduceSum(function (d) {
+            return d.count;
+       });
+
+       stateChart.options({
+            height: 500,
+            width: 300,
+            dimension: stateDim,
+            group: stateCount,
+            elasticX: true
+       });
+
+       stateChart.render();
+   });
+
+Start the server, and load http://localhost:6543/example.dengueviz. The
+visualization should appear on that page.
+
+.. seealso::
+
+   `Bootstrap Grid System <http://getbootstrap.com/css/#grid>`_
+        Grid system for layout
+
+   `DC.js <http://dc-js.github.io/dc.js/>`_
+        Dimensional Charting Javascript library used for visualization
+
+   `DC.js Examples <http://dc-js.github.io/dc.js/examples/>`_
+        Example implementation of DC.js charts
+
+   `D3.js <http://d3js.org>`_
+        Data Driven Document visualization library
+
+   `dc-addons <https://github.com/Intellipharm/dc-addons>`_
+        Additional charts for DC.js
+
 Registering navigation elements
--------------------------------
+===============================
 
 Setting dashboard as home view
--------------------------------
+===============================
 
