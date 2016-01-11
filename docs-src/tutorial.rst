@@ -377,6 +377,12 @@ visualization should appear on that page.
 
 .. seealso::
 
+   `Template Attribute Language (TAL) Specification <http://docs.zope.org/zope2/zope2book/AppendixC.html>`_
+        XML based templating language 
+
+   `Chameleon Template <https://chameleon.readthedocs.org/en/latest/>`_
+        Chameleon templating engine (implements TAL)
+
    `Bootstrap Grid System <http://getbootstrap.com/css/#grid>`_
         Grid system for layout
 
