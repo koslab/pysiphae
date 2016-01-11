@@ -227,7 +227,7 @@ this in github, let download it into our project.
    wget https://gist.githubusercontent.com/kagesenshi/2c53e855e776472723f4/raw/59ce71b7c6dbc027a5abfa4d9cba68bb9d58b801/epiweek.py \
         -O src/example/dengueviz/epiweek.py
 
-Edit ``src/example/dengueviz/view.py`` and add these lines:
+Edit ``src/example/dengueviz/views.py`` and add these lines:
 
 * at the top of the file:
 
@@ -281,7 +281,7 @@ dashboard.
 Create Dashboard View
 ----------------------
 
-In ``src/example/dengueviz/view.py``, you will see that there is already one
+In ``src/example/dengueviz/views.py``, you will see that there is already one
 view under the name as ``default_view``. The view's template is in
 ``src/example/dengueviz/templates/default.pt``.
 
