@@ -14,6 +14,15 @@ A process manager UI is included in Pysiphae dashboard for executing the jobs
    secure environment.
 
 
+Starting Process Manager Server
+================================
+
+.. code-block:: bash
+
+   ./bin/pysiphae_processmgr
+
+By default the Process Manager server will run on http://localhost:8888. 
+
 Enabling Process Manager View
 =============================
 
