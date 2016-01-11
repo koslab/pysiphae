@@ -5,6 +5,8 @@ Pysiphae is a framework for developing dashboards. It takes care of
 all the nitty-gritty content management stuff and let data engineers focus in
 doing what they do best - preparing and visualizing data.
 
+Source code is available at https://github.com/koslab/pysiphae.
+
 Features of Pysiphae framework includes:
 
 * Pre-integrated Javascript libraries
