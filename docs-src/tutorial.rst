@@ -303,7 +303,7 @@ Clear the contents of ``default.pt`` and replace with this:
             <div class="row">
                 <div class="col-lg-8 col-sm-8">
                     <div class="panel panel-default">
-                        <div class="panel-header">
+                        <div class="panel-heading">
                             Cases Over Time
                         </div>
                         <div class="panel-body">
@@ -313,7 +313,7 @@ Clear the contents of ``default.pt`` and replace with this:
                 </div>
                 <div class="col-lg-4 col-sm-4">
                     <div class="panel panel-default">
-                        <div class="panel-header">
+                        <div class="panel-heading">
                             States
                         </div>
                         <div class="panel-body">
@@ -326,7 +326,7 @@ Clear the contents of ``default.pt`` and replace with this:
        <metal:script fill-slot="javascript_footer_slot">
             <script src="/++static++example.dengueviz/default.js"></script>
        </metal:script>
-   <metal:master>
+   </metal:master>
 
 Following is a description of the template above:
 
