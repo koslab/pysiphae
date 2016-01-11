@@ -6,9 +6,9 @@ import json
 
 class RunnerViews(Views):
     
-    @view_config(route_name='pysiphae.runner', 
+    @view_config(route_name='pysiphae.processmgr', 
             renderer='templates/runner.pt',
-            permission='pysiphae.ViewRunner')
+            permission='pysiphae.processmgr.View')
     def runner_view(self):
         registry = self.request.registry
         payload_name = self.request.params.get('payload', None)
@@ -33,9 +33,9 @@ class RunnerViews(Views):
             'payloads': result
         }
 
-    @view_config(route_name='pysiphae.runner.group', 
+    @view_config(route_name='pysiphae.processmgr.group', 
             renderer='templates/group.pt',
-            permission='pysiphae.ViewRunner')
+            permission='pysiphae.processmgr.View')
     def group_view(self):
         name = self.request.matchdict['name']
         api = self.request.registry.getUtility(IProcessManager)
@@ -46,9 +46,9 @@ class RunnerViews(Views):
             'processes': procs
         }
 
-    @view_config(route_name='pysiphae.runner.process', 
+    @view_config(route_name='pysiphae.processmgr.process', 
             renderer='templates/process.pt',
-            permission='pysiphae.ViewRunner')
+            permission='pysiphae.processmgr.View')
     def process_view(self):
         name = self.request.matchdict['name']
         process_id = self.request.matchdict['process_id']
