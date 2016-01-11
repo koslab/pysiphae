@@ -18,9 +18,9 @@ Registering Process Payload
 
 .. code-block:: python
 
-   from pysiphae.runner.payload import payload_factory
+   from pysiphae.processmgr.payload import factory
 
-   p1 = payload_factory(
+   p1 = factory(
        name='uname payload',
        description='Get uname of the process management server',
        executor='shell',
