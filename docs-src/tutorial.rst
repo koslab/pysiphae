@@ -44,11 +44,19 @@ Setting up your environment
 Installing Pysiphae
 --------------------
 
-To install pysiphae, run:
+We recommend using ``virtualenv`` to install pysiphae to avoid conflicts with
+your system python. 
 
 .. code-block:: bash
 
-    pip install git+https://github.com/koslab/pysiphae.git
+   virtualenv venv
+   cd venv
+
+To install pysiphae into virtualenv, run:
+
+.. code-block:: bash
+
+    ./bin/pip install git+https://github.com/koslab/pysiphae.git
 
 .. note:: 
 
@@ -79,7 +87,7 @@ using:
 
 .. code-block:: bash
 
-   templer pysiphae example.dengueviz
+   ./bin/templer pysiphae example.dengueviz
    cd example.dengueviz
 
 .. note::
