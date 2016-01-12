@@ -9,6 +9,7 @@ import tempfile
 import os
 import base64
 import argparse
+import copy
 
 _TRACKERS={}
 EXECUTORS={}
@@ -49,7 +50,8 @@ class ProcessSpawner(object):
         self.output_dir = tempfile.mkdtemp()
         self.registry = registry or {}
 
-    def spawn(self, command, files=None):
+    def spawn(self, command, environ=None, files=None):
+        environ=environ or {}
         files = files or []
         _id = uuid4().hex
         process_dir = os.path.join(self.output_dir, _id)
@@ -65,7 +67,8 @@ class ProcessSpawner(object):
         with open(outlog, 'wb') as out, open(errlog, 'wb') as err:
             if isinstance(command, str):
                 command = command.split()
-            p = Subprocess(command, stdout=out, stderr=err, cwd=process_dir)
+            p = Subprocess(command, env=environ, stdout=out, stderr=err, 
+                            cwd=process_dir)
 
         datum = {
             '_id': _id,
@@ -93,9 +96,11 @@ class ShellExecutor(object):
     def __init__(self, command):
         self.command = command
 
-    def run(self, group, files):
+    def run(self, group, environ, files):
         spawner = ProcessSpawner(group)
-        return spawner.spawn(self.command, files)
+        env = copy.deepcopy(os.environ)
+        env.update(self.environ)
+        return spawner.spawn(self.command, env, files)
 
 EXECUTORS['shell'] = ShellExecutor
 
@@ -107,8 +112,9 @@ class SpawnHandler(tornado.web.RequestHandler):
         if not executor or not group:
             raise tornado.web.HTTPError(400)
         options = data.get('options', {})
+        environ = data.get('environ', {})
         e = EXECUTORS[executor](**options)
-        result = e.run(group, data.get('files', []))
+        result = e.run(group, environ, data.get('files', []))
         self.set_header("Content-Type", "application/json")
         self.write(json.dumps(result, indent=4))
 
