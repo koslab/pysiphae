@@ -99,7 +99,7 @@ class ShellExecutor(object):
     def run(self, group, environ, files):
         spawner = ProcessSpawner(group)
         env = copy.deepcopy(os.environ)
-        env.update(self.environ)
+        env.update(environ)
         return spawner.spawn(self.command, env, files)
 
 EXECUTORS['shell'] = ShellExecutor
