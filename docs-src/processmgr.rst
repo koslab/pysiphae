@@ -66,5 +66,8 @@ Parameters:
 
 * ``options`` - additional options to pass to executor
 
+* ``environ`` - dictionary containing environment variables to pass to 
+  executor
+
 * ``permission`` - permission to use this executor, default no permission
   required
