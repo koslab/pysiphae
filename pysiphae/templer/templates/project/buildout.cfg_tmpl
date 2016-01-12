@@ -7,7 +7,7 @@ sources = sources
 auto-checkout = *
 
 [sources]
-pysiphae = git git@github.com:koslab/pysiphae.git
+pysiphae = git https://github.com/koslab/pysiphae.git
 
 [${project}]
 recipe = zc.recipe.egg
