@@ -1,4 +1,5 @@
 from pysiphae.views import Views
+from pyramid.security import NO_PERMISSION_REQUIRED
 from pysiphae.interfaces import IProcessPayload
 from pysiphae.interfaces import IProcessManager
 from pyramid.view import view_config
@@ -19,6 +20,10 @@ class RunnerViews(Views):
             res = payload.launch(self.request, api)
             return HTTPFound(location=self.request.path)
         payloads = self.request.registry.getUtilitiesFor(IProcessPayload)
+        # only allow authorized payloads
+        payloads = [p for p in payloads if (
+            p[1].permission == NO_PERMISSION_REQUIRED or
+            self.request.has_permission(p[1].permission, self.context))]
         result = []
         for name, payload in payloads:
             procs = payload.processes(self.request, api)

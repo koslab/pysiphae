@@ -6,6 +6,7 @@ import base64
 import os
 import requests
 from urlparse import urlparse, ParseResult
+from pyramid.security import NO_PERMISSION_REQUIRED
 
 class ProcessManager(object):
     implements(IProcessManager)
@@ -43,13 +44,13 @@ class Payload(object):
     implements(IProcessPayload)
 
     def __init__(self, name, description, 
-                       executor, files=None, options=None):
+                       executor, files=None, options=None, permission=None):
         self.name = name
         self.description = description
         self.executor = executor
         self.options = options or {}
         self.files = files or []
-
+        self.permission = permission or NO_PERMISSION_REQUIRED
         
     def payload(self, request):
         files = []
@@ -74,8 +75,9 @@ class Payload(object):
     def processes(self, request, api):
         return api.processes(group=self.name).get(self.name, [])
 
-def factory(name, description, executor='shell', files=None, options=None):
-    payload = Payload(name, description, executor, files, options)
+def factory(name, description, executor='shell', files=None, options=None,
+        permission=None):
+    payload = Payload(name, description, executor, files, options, permission)
     def callback(scanner, name, obj):
         scanner.config.registry.registerUtility(obj, IProcessPayload, obj.name)
     venusian.attach(payload, callback)
