@@ -17,10 +17,18 @@ def main(global_config, **settings):
         config.set_default_permission(default_permission)
     config.set_root_factory(root_factory)
 
-    config.registry.registerUtility(
-        ProcessManager(
-            settings.get('pysiphae.processmgr.url', 
-                'http://localhost:8888')))
+    # register process managers
+    processmgrs = [pm.split('=') 
+        for pm in settings.get('pysiphae.processmanagers', '').split('\n')
+        if pm.strip()]
+    if not processmgrs:
+        processmgrs.append(('defaut', 'http://localhost:8888'))
+
+    for name, url in processmgrs:
+        if name == 'default':
+            config.registry.registerUtility(ProcessManager(url))
+        else:
+            config.registry.registerUtility(ProcessManager(url), name=name)
 
     config.add_static_view('++static++', 'static', cache_max_age=3600)
     config.add_route('home','/')

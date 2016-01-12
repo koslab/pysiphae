@@ -8,6 +8,7 @@ import json
 import tempfile
 import os
 import base64
+import argparse
 
 _TRACKERS={}
 EXECUTORS={}
@@ -180,8 +181,12 @@ def make_app():
     ])
 
 def main():
+    parser = argparse.ArgumentParser(
+        description='Start Process Manager Daemon')
+    parser.add_argument('--port', type=int, help='Port number', default=8080)
+    args = parser.parse_args()
     app = make_app()
-    port = 8888
+    port = args.port
     print "Listening on %s" % port
     app.listen(port)
     tornado.ioloop.IOLoop.current().start()

@@ -14,9 +14,10 @@ class RunnerViews(Views):
     def runner_view(self):
         registry = self.request.registry
         payload_name = self.request.params.get('payload', None)
-        api = self.request.registry.getUtility(IProcessManager)
         if payload_name:
             payload = registry.getUtility(IProcessPayload, name=payload_name)
+            api = self.request.registry.getUtility(IProcessManager,
+                    name=payload.server)
             res = payload.launch(self.request, api)
             return HTTPFound(location=self.request.path)
         payloads = self.request.registry.getUtilitiesFor(IProcessPayload)
@@ -26,6 +27,8 @@ class RunnerViews(Views):
             self.request.has_permission(p[1].permission, self.context))]
         result = []
         for name, payload in payloads:
+            api = self.request.registry.getUtility(IProcessManager,
+                    name=payload.server)
             procs = payload.processes(self.request, api)
             running = len([i for i in procs if i['state'] == 'running'])
             stopped = len([i for i in procs if i['state'] == 'stopped'])
@@ -45,7 +48,9 @@ class RunnerViews(Views):
             permission='pysiphae.processmgr.View')
     def group_view(self):
         name = self.request.matchdict['name']
-        api = self.request.registry.getUtility(IProcessManager)
+        payload = self.request.registry.getUtility(IProcessPayload, name=name)
+        api = self.request.registry.getUtility(IProcessManager,
+                name=payload.server)
         procs = api.processes(name).get(name, [])
         procs = sorted(procs, key=lambda x: x['start'], reverse=True)
         return {
@@ -59,7 +64,9 @@ class RunnerViews(Views):
     def process_view(self):
         name = self.request.matchdict['name']
         process_id = self.request.matchdict['process_id']
-        api = self.request.registry.getUtility(IProcessManager)
+        payload = self.request.registry.getUtility(IProcessPayload, name=name)
+        api = self.request.registry.getUtility(IProcessManager,
+                name=payload.server)
         process_data = api.process(process_id)
         return {
             'name': name,
