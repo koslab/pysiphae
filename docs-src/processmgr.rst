@@ -65,3 +65,6 @@ Parameters:
 * ``files`` - asset spefication pointing to files to upload to server
 
 * ``options`` - additional options to pass to executor
+
+* ``permission`` - permission to use this executor, default no permission
+  required
