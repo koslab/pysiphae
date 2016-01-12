@@ -43,9 +43,9 @@ class ProcessManager(object):
 class Payload(object):
     implements(IProcessPayload)
 
-    def __init__(self, name, description, 
-                       executor, files=None, options=None, permission=None,
-                       server=None):
+    def __init__(self, name, description, executor, 
+                        files=None, options=None, permission=None,
+                       environ=None, server=None):
         self.name = name
         self.description = description
         self.executor = executor
@@ -53,6 +53,7 @@ class Payload(object):
         self.files = files or []
         self.permission = permission or NO_PERMISSION_REQUIRED
         self.server = server
+        self.environ = environ
         
     def payload(self, request):
         files = []
@@ -68,6 +69,7 @@ class Payload(object):
             'group': self.name,
             'executor': self.executor,
             'options': self.options,
+            'environ': self.environ,
             'files': files
         }
 
@@ -78,9 +80,9 @@ class Payload(object):
         return api.processes(group=self.name).get(self.name, [])
 
 def factory(name, description, executor='shell', files=None, options=None,
-        permission=None, server=None):
+        permission=None, environ=None, server=None):
     payload = Payload(name, description, executor, files, options, permission,
-                        server)
+            environ, server)
     def callback(scanner, name, obj):
         scanner.config.registry.registerUtility(obj, IProcessPayload, obj.name)
     venusian.attach(payload, callback)
