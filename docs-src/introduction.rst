@@ -46,7 +46,7 @@ Features of Pysiphae framework includes:
 Project Sponsors
 -----------------
 
-- `Abyres Sdn Bhd <http://www.abyres.net>`_
+- `Abyres Enterprise Technologies Sdn Bhd <http://www.abyres.net>`_
 
 Contributors
 -------------
