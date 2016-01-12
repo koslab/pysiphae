@@ -189,7 +189,7 @@ def make_app():
 def main():
     parser = argparse.ArgumentParser(
         description='Start Process Manager Daemon')
-    parser.add_argument('--port', type=int, help='Port number', default=8080)
+    parser.add_argument('--port', type=int, help='Port number', default=8888)
     args = parser.parse_args()
     app = make_app()
     port = args.port
