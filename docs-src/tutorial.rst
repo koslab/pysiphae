@@ -337,7 +337,8 @@ Following is a description of the template above:
 
 * Include javascript for rendering charts
 
-Now let create javascript code for rendering the charts:
+Now let create javascript code for rendering the charts. Edit
+``src/example/dengueviz/static/default.js`` with the following code:
 
 .. code-block:: javascript
 
