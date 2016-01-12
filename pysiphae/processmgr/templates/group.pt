@@ -23,7 +23,7 @@
                             <tbody>
                                 <tr tal:repeat="p processes">
                                     <td>
-                                        <a tal:attributes="href string:/runner/${name}/${p['_id']}"
+                                        <a tal:attributes="href string:/processmgr/${name}/${p['_id']}"
                                             tal:content="p['_id']"></a>
                                     </td>
                                     <td tal:content="p['start']"></td>

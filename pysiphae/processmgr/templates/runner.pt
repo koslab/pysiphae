@@ -25,11 +25,11 @@
                             <tbody>
                                 <tr tal:repeat="p payloads">
                                     <td>
-                                        <a tal:attributes="href string:/runner/${p['name']}"
+                                        <a tal:attributes="href string:/processmgr/${p['name']}"
                                             tal:content="p['name']"></a>
                                     </td>
                                     <td>
-                                        <a tal:attributes="href string:/runner/${p['name']}"
+                                        <a tal:attributes="href string:/processmgr/${p['name']}"
                                             tal:content="p['description']"></a></td>
                                     <td tal:content="p['type']"></td>
                                     <td tal:content="p['running']"></td>

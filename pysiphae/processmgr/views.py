@@ -1,7 +1,8 @@
 from pysiphae.views import Views
 from pysiphae.interfaces import IProcessPayload
 from pysiphae.interfaces import IProcessManager
-from pyramid.view import view_config, forbidden_view_config
+from pyramid.view import view_config
+from pyramid.httpexceptions import HTTPFound
 import json
 
 class RunnerViews(Views):
@@ -16,6 +17,7 @@ class RunnerViews(Views):
         if payload_name:
             payload = registry.getUtility(IProcessPayload, name=payload_name)
             res = payload.launch(self.request, api)
+            return HTTPFound(location=self.request.path)
         payloads = self.request.registry.getUtilitiesFor(IProcessPayload)
         result = []
         for name, payload in payloads:
