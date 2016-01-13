@@ -635,12 +635,14 @@
     <script type="text/javascript" src="/++static++/bower_components/dimple/dist/dimple.v2.1.6.js"></script>
     <script type="text/javascript" src="/++static++/bower_components/heatmap.js.bower/build/heatmap.js"></script>
     <script type="text/javascript" src="/++static++/bower_components/heatmap.js.bower/plugins/leaflet-heatmap.js"></script>
+    <script type="text/javascript" src="/++static++/bower_components/d3-cloud-bower/d3.layout.cloud.js"></script>
 
 
     <!-- Custom Theme JavaScript -->
     <script type="text/javascript" src="/++static++/leaflet-piemarker.js"></script>
     <script type="text/javascript" src="/++static++/dc-responsive.js"></script>
     <script type="text/javascript" src="/++static++/dc-heatmap.js"></script>
+    <script type="text/javascript" src="/++static++/dc-wordcloud.js"></script>
     <script type="text/javascript" src="/++static++/pysiphae.js"></script>
 
     <metal:slot define-slot="javascript_footer_slot"/>
