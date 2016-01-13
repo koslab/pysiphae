@@ -4,6 +4,7 @@ from .interfaces import (
         IHomeUrl, 
         IStorageFactory,
         INavigationProvider)
+from .processmgr.payload import payload_factory as payload
 
 def template_variables(wrapped):
     def callback(scanner, name, obj):

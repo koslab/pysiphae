@@ -15,12 +15,12 @@ class RunnerViews(Views):
         registry = self.request.registry
         payload_name = self.request.params.get('payload', None)
         if payload_name:
-            payload = registry.getUtility(IProcessPayload, name=payload_name)
+            payload = registry.getAdapter(self.request, IProcessPayload, name=payload_name)
             api = self.request.registry.getUtility(IProcessManager,
                     name=payload.server)
             res = payload.launch(self.request, api)
             return HTTPFound(location=self.request.path)
-        payloads = self.request.registry.getUtilitiesFor(IProcessPayload)
+        payloads = self.request.registry.getAdapters((self.request,), IProcessPayload)
         # only allow authorized payloads
         payloads = [p for p in payloads if (
             p[1].permission == NO_PERMISSION_REQUIRED or
@@ -48,7 +48,7 @@ class RunnerViews(Views):
             permission='pysiphae.processmgr.View')
     def group_view(self):
         name = self.request.matchdict['name']
-        payload = self.request.registry.getUtility(IProcessPayload, name=name)
+        payload = self.request.registry.getAdapter(self.request, IProcessPayload, name=name)
         api = self.request.registry.getUtility(IProcessManager,
                 name=payload.server)
         procs = api.processes(name).get(name, [])
@@ -64,7 +64,7 @@ class RunnerViews(Views):
     def process_view(self):
         name = self.request.matchdict['name']
         process_id = self.request.matchdict['process_id']
-        payload = self.request.registry.getUtility(IProcessPayload, name=name)
+        payload = self.request.registry.getAdapter(self.request, IProcessPayload, name=name)
         api = self.request.registry.getUtility(IProcessManager,
                 name=payload.server)
         process_data = api.process(process_id)

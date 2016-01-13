@@ -7,6 +7,7 @@ import os
 import requests
 from urlparse import urlparse, ParseResult
 from pyramid.security import NO_PERMISSION_REQUIRED
+from pyramid.interfaces import IRequest
 
 class ProcessManager(object):
     implements(IProcessManager)
@@ -79,11 +80,23 @@ class Payload(object):
     def processes(self, request, api):
         return api.processes(group=self.name).get(self.name, [])
 
-def factory(name, description, executor='shell', files=None, options=None,
-        permission=None, environ=None, server=None):
-    payload = Payload(name, description, executor, files, options, permission,
-            environ, server)
-    def callback(scanner, name, obj):
-        scanner.config.registry.registerUtility(obj, IProcessPayload, obj.name)
-    venusian.attach(payload, callback)
-    return payload
+def payload_factory(name):
+    def wrapper(wrapped):
+        def callback(scanner, xname, func):
+            def _factory(request):
+                params = {
+                    'name': name,
+                    'executor': 'shell', 
+                    'files': None, 
+                    'options': None,
+                    'permission': None, 
+                    'environ': None, 
+                    'server': None
+                }
+                params.update(func(request))
+                return Payload(**params)
+            scanner.config.registry.registerAdapter(_factory, (IRequest,),
+                    IProcessPayload, name)
+        venusian.attach(wrapped, callback)
+        return wrapped
+    return wrapper
