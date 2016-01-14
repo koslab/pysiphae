@@ -13,6 +13,8 @@
         var _padding = function(d){return null;};
         var _font = function (d){return null;};
         var _relativeSize = function (d){return null;};
+        var _widthg = function (d) {return null;};
+        var _heightg = function (d) {return null;};
         var _fill = d3.scale.category20();
         
         _chart._doRender = function (){
@@ -69,8 +71,8 @@
 
         function draw(words) {
             _g
-            .attr("width", _chart.width())
-            .attr("height", _chart.height())
+            .attr("width", _chart.widthg())
+            .attr("height", _chart.heightg())
             .attr("transform", "translate(150,150)")
             .selectAll("text")
             .data(words)
@@ -100,6 +102,24 @@
             }
             
             _font = _;
+            return _chart;
+        }
+        
+        _chart.widthg = function (_){
+            if(!arguments.length){
+                return _widthg;
+            }
+            
+            _widthg = _;
+            return _chart;
+        }
+        
+        _chart.heightg = function (_){
+            if(!arguments.length){
+                return _heightg;
+            }
+            
+            _heightg = _;
             return _chart;
         }
         
