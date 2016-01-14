@@ -33,6 +33,7 @@
     "heatmap.js.bower": ""
   },
   "resolutions": {
-    "d3": "3.5.10"
+    "d3": "3.5.10",
+    "jquery": ">= 2.1.0"
   }
 }
