@@ -12,6 +12,7 @@
         var _g = null;
         var _padding = function(d){return null;};
         var _font = function (d){return null;};
+        var _relativeSize = function (d){return null;};
         var _fill = d3.scale.category20();
         
         _chart._doRender = function (){
@@ -36,7 +37,12 @@
                 .size([_chart.width(), _chart.height()]);
 
             _cloud
-                .words(_chart.data())
+                .words(_chart.data().map(function (d){
+                    return { 
+                    text : d.key, 
+                    size : checkSize(d)
+                    }
+                }))
                 .padding(_chart.padding())
                 .rotate(function() { 
                     return ~~(Math.random() * 2) * 90; 
@@ -48,6 +54,17 @@
                 .on("end", draw);
 
                _cloud.start();
+        }
+        
+        function checkSize(d){
+            var x = 0;
+            if(d.value <= 0) { 
+                x = 0
+            } else { 
+                x = Math.log(d.value)*_chart.relativeSize();
+            }
+            
+            return x;
         }
 
         function draw(words) {
@@ -83,6 +100,15 @@
             }
             
             _font = _;
+            return _chart;
+        }
+        
+        _chart.relativeSize = function (_){
+            if(!arguments.length){
+                return _relativeSize;
+            }
+            
+            _relativeSize = _;
             return _chart;
         }
 
