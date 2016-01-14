@@ -42,3 +42,12 @@ div.dc-chart { float:none };
     fill: black
 }
 
+.autocomplete-suggestion {
+    background:#fff;
+    border:#999 solid thin;
+    padding: 5px 3px;
+}
+
+.autocomplete-suggestion.autocomplete-selected {
+    background:#eee;
+}

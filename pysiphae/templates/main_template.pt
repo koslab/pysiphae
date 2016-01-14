@@ -33,8 +33,7 @@
   <link rel="stylesheet" href="/++static++/bower_components/jsPlumb/dist/css/jsplumb.css">
   <link rel="stylesheet" href="/++static++/bower_components/jsPlumb/dist/css/jsPlumbToolkit-defaults.css">
 
-
-      <!-- data visualization -->
+  <!-- data visualization -->
     <link rel="stylesheet" type="text/css" href="/++static++/bower_components/leaflet/dist/leaflet.css"/>
     <link rel="stylesheet" type="text/css" href="/++static++/bower_components/leaflet.markercluster/dist/MarkerCluster.Default.css"/>
     <link rel="stylesheet" type="text/css" href="/++static++/bower_components/leaflet.markercluster/dist/MarkerCluster.css"/>
@@ -636,6 +635,7 @@
     <script type="text/javascript" src="/++static++/bower_components/heatmap.js.bower/build/heatmap.js"></script>
     <script type="text/javascript" src="/++static++/bower_components/heatmap.js.bower/plugins/leaflet-heatmap.js"></script>
     <script type="text/javascript" src="/++static++/bower_components/d3-cloud-bower/d3.layout.cloud.js"></script>
+    <script type="text/javascript" src="/++static++/bower_components/devbridge-autocomplete/dist/jquery.autocomplete.js"></script>
 
 
     <!-- Custom Theme JavaScript -->

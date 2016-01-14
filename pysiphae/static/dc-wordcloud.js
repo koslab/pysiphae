@@ -6,21 +6,35 @@
     }
 
     dc.wordcloudChart = function (parent, chartGroup){
-        var _chart = dc.bubbleMixin(dc.capMixin(dc.bubbleChart(parent)));
+        var _chart = dc.baseMixin({});
         
-        var _cloud = null;
-        var _g = null;
-        var _padding = function(d){return null;};
-        var _font = function (d){return null;};
-        var _relativeSize = function (d){return null;};
-        var _widthg = function (d) {return null;};
-        var _heightg = function (d) {return null;};
-        var _fill = d3.scale.category20();
+        var _cloud = null,
+            _g = null,
+            _padding = 5,
+            _font = "Impact",
+            _relativeSize = 10,
+            _minX = 0,
+            _minY = 0,
+            _fill = d3.scale.category20();
         
+        var _coordinate = function (d) {
+            var key = _chart.keyAccessor()(d);
+            return {
+                'x': key[0],
+                'y': key[1]
+            }
+        };
+
+        var _radiusAccessor = function (d) {
+            return null;
+        };
+
         _chart._doRender = function (){
             _chart.resetSvg();
 
-            _g = _chart.svg().append('g');
+            _g = _chart.svg()
+                .attr("viewBox", ""+_chart.minX()+" "+ _chart.minY()+" "+_chart.width()+" "+_chart.height()+"")
+                .append('g');
 
             drawCloud();
 
@@ -35,16 +49,33 @@
 
         function drawCloud(){
 
+            var groups = _chart._computeOrderedGroups(_chart.data()).filter(function (d){
+                return _chart.valueAccessor()(d) !== 0;
+            });
+
+            var data = groups.map(function (d){
+
+                var coord = _chart.coordinateAccessor()(d);
+                var value = _chart.valueAccessor()(d);
+                var radius = _chart.radiusAccessor()(d);
+                var result = { 
+                    'text' : d.key, 
+                    'size' : checkSize(d)
+                }
+                var radius = _chart.radiusAccessor()(d);
+                if (radius != null) {
+                    result['radius'] = radius;
+                };
+
+                return result;               
+                
+            })
+
             _cloud =  d3.layout.cloud()
                 .size([_chart.width(), _chart.height()]);
 
             _cloud
-                .words(_chart.data().map(function (d){
-                    return { 
-                    text : d.key, 
-                    size : checkSize(d)
-                    }
-                }))
+                .words(data)
                 .padding(_chart.padding())
                 .rotate(function() { 
                     return ~~(Math.random() * 2) * 90; 
@@ -71,14 +102,14 @@
 
         function draw(words) {
             _g
-            .attr("width", _chart.widthg())
-            .attr("height", _chart.heightg())
+            .attr("width", _chart.width())
+            .attr("height", _chart.height())
             .attr("transform", "translate(150,150)")
             .selectAll("text")
             .data(words)
             .enter().append("text")
             .style("font-size", function(d) { return d.size + "px"; })
-            .style("font-family", "Impact")
+            .style("font-family", _chart.font())
             .style("fill", function(d, i) { return _fill(i); })
             .attr("text-anchor", "middle")
             .attr("transform", function(d) {
@@ -86,7 +117,25 @@
             })
             .text(function(d) { return d.text; });
         }
+
+        _chart.minX = function (_){
+            if(!arguments.length){
+                return _minX;
+            }
+            
+            _minX = _;
+            return _chart;
+        }
         
+        _chart.minY = function (_){
+            if(!arguments.length){
+                return _minY;
+            }
+            
+            _minY = _;
+            return _chart;
+        }
+
         _chart.padding = function (_){
             if(!arguments.length){
                 return _padding;
@@ -105,23 +154,23 @@
             return _chart;
         }
         
-        _chart.widthg = function (_){
-            if(!arguments.length){
-                return _widthg;
-            }
-            
-            _widthg = _;
+        _chart.coordinateAccessor = function (_) {
+            if (!arguments.length) {
+                return _coordinate;
+            };
+
+            _coordinate = _;
             return _chart;
-        }
-        
-        _chart.heightg = function (_){
-            if(!arguments.length){
-                return _heightg;
+        };
+
+        _chart.radiusAccessor = function (_) {
+            if (!arguments.length) {
+                return _radiusAccessor;
             }
-            
-            _heightg = _;
+
+            _radiusAccessor = _;
             return _chart;
-        }
+        };
         
         _chart.relativeSize = function (_){
             if(!arguments.length){
