@@ -17,33 +17,24 @@
             _minY = 0,
             _fill = d3.scale.category20();
         
-        var _coordinate = function (d) {
-            var key = _chart.keyAccessor()(d);
-            return {
-                'x': key[0],
-                'y': key[1]
-            }
-        };
-
-        var _radiusAccessor = function (d) {
-            return null;
-        };
 
         _chart._doRender = function (){
+            initializeSvg();
+            drawCloud();
+
+            return _chart._doRedraw();
+        }
+
+        function initializeSvg(){
+
             _chart.resetSvg();
 
             _g = _chart.svg()
-                .attr("viewBox", ""+_chart.minX()+" "+ _chart.minY()+" "+_chart.width()+" "+_chart.height()+"")
                 .append('g');
-
-            drawCloud();
-
-            return _chart;
         }
-        
         _chart._doRedraw = function (){
+            initializeSvg();
             drawCloud();
-
             return _chart;
         }
 
@@ -54,18 +45,13 @@
             });
 
             var data = groups.map(function (d){
-
-                var coord = _chart.coordinateAccessor()(d);
                 var value = _chart.valueAccessor()(d);
-                var radius = _chart.radiusAccessor()(d);
+                console.log(value);
                 var result = { 
                     'text' : d.key, 
-                    'size' : checkSize(d)
+                    'size' : checkSize(d),
+                    'value' : value
                 }
-                var radius = _chart.radiusAccessor()(d);
-                if (radius != null) {
-                    result['radius'] = radius;
-                };
 
                 return result;               
                 
@@ -87,6 +73,9 @@
                 .on("end", draw);
 
                _cloud.start();
+
+                console.log(d3.select(_chart.anchor())[0]);
+
         }
         
         function checkSize(d){
