@@ -1,4 +1,3 @@
-from pysiphae.views import Views
 from pyramid.security import NO_PERMISSION_REQUIRED
 from pysiphae.interfaces import IProcessPayload
 from pysiphae.interfaces import IProcessManager
@@ -6,7 +5,7 @@ from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPFound
 import json
 
-class RunnerViews(Views):
+class RunnerViews(object):
     
     @view_config(route_name='pysiphae.processmgr', 
             renderer='templates/runner.pt',

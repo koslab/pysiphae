@@ -1,13 +1,10 @@
 from pyramid.view import view_config
-from pysiphae.views import Views as BaseViews
 from sqlalchemy.engine import create_engine
 from pyramid.exceptions import NotFound
 from wraptor.decorators import memoize
 from sqlalchemy.sql import text
 import asset, json
 
-class Views(BaseViews):
-
-    @view_config(route_name='${project}', renderer='templates/default.pt')
-    def default_view(self):
-        return { 'page_header': '${project} Dashboard' }
+@view_config(route_name='${project}', renderer='templates/default.pt')
+def default_view(context, request):
+    return { 'page_header': '${project} Dashboard' }

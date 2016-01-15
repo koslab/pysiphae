@@ -1,4 +1,4 @@
-<metal:master use-macro="view.main_template">
+<metal:master use-macro="request.main_template">
     <metal:style fill-slot="style_slot">
         .sample-red { color : red }
     </metal:style>

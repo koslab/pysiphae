@@ -229,19 +229,13 @@ this in github, let download it into our project.
 
 Edit ``src/example/dengueviz/views.py`` and add these lines:
 
-* at the top of the file:
-
 .. code-block:: python
 
    import epiweek
 
-* in the ``Views`` class.
-
-.. code-block:: python
-
    @view_config(route_name='example.dengueviz.json',
                 renderer='json')
-   def json_view(self):
+   def json_view(context, request):
        # load data into memory
        f = asset.load('example.dengueviz:dengue-hotspot.jsonl')
        data = [json.loads(l) for l in open(f.filename)]
@@ -292,7 +286,7 @@ Clear the contents of ``default.pt`` and replace with this:
 
 .. code-block:: xml
 
-   <metal:master use-macro="view.main_template">
+   <metal:master use-macro="request.main_template">
        <metal:style fill-slot="style_slot">
            // put CSS here
        </metal:style>
