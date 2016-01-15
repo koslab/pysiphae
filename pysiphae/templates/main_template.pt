@@ -635,6 +635,7 @@
     <script type="text/javascript" src="/++static++/bower_components/vis/dist/vis.js"></script>
     <script type="text/javascript" src="/++static++/bower_components/heatmap.js.bower/build/heatmap.js"></script>
     <script type="text/javascript" src="/++static++/bower_components/heatmap.js.bower/plugins/leaflet-heatmap.js"></script>
+    <script type="text/javascript" src="/++static++/bower_components/d3-cloud-bower/d3.layout.cloud.js"></script>
     <script type="text/javascript" src="/++static++/bower_components/devbridge-autocomplete/dist/jquery.autocomplete.js"></script>
 
 
@@ -642,6 +643,7 @@
     <script type="text/javascript" src="/++static++/leaflet-piemarker.js"></script>
     <script type="text/javascript" src="/++static++/dc-responsive.js"></script>
     <script type="text/javascript" src="/++static++/dc-heatmap.js"></script>
+    <script type="text/javascript" src="/++static++/dc-wordcloud.js"></script>
     <script type="text/javascript" src="/++static++/dc-vis.js"></script>
     <script type="text/javascript" src="/++static++/pysiphae.js"></script>
 
