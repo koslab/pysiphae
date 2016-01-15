@@ -31,7 +31,8 @@
     "dimple": "2.1.6",
     "jsPlumb": "2.0.5",
     "heatmap.js.bower": "",
-    "d3-cloud-bower":""
+    "d3-cloud-bower":"",
+    "devbridge-autocomplete": "1.2.24"
   },
   "resolutions": {
     "d3": "3.5.10",
