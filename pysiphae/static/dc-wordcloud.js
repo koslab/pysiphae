@@ -36,9 +36,13 @@
                 .attr("height",_chart.height())
                 .attr("width",_chart.width())
                 .append('g')
-                .on('click', _chart.onClick)
+                //.on('click', _chart.onClick)
                 .attr('cursor', 'pointer');
         }
+
+        var titleFunction = function (d) {
+            return _chart.title()(d);
+        };
 
         function drawWordCloud(){
             initializeSvg();
@@ -50,11 +54,13 @@
             var data = groups.map(function (d){
                 var value = _chart.valueAccessor()(d);
                 var key = _chart.keyAccessor()(d);
+                var title = _chart.title()(d);
                 var result = { 
                     'text' : d.key, 
                     'size' : checkSize(d),
                     'value' : value,
-                    'key' : key
+                    'key' : key,
+                    'title': title
                 }
 
                 return result;               
@@ -77,6 +83,7 @@
                 })
                 .on("end", draw);
 
+            
             _cloud.start();
 
         }
@@ -110,6 +117,7 @@
 
 
         function draw(words) {
+            console.log(words);
             _g
             .attr("width", _chart.width())
             .attr("height", _chart.height())
@@ -124,7 +132,8 @@
             .attr("transform", function(d) {
                 return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
             })
-            .text(function(d) { return d.text; })
+            .text(function(d) { return d.text; }).append('title').text(function(d){return d.title});
+
         }
 
         _chart.minX = function (_){
