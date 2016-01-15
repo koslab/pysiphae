@@ -19,43 +19,48 @@
         
 
         _chart._doRender = function (){
-            initializeSvg();
-            drawCloud();
+            _chart.on('postRender',function(){
+                _chart.apply();
+            })
+            drawWordCloud();
 
             return _chart._doRedraw();
         }
 
         function initializeSvg(){
 
-            _chart.resetSvg();
+            _chart.select('svg').remove();
 
-            _g = _chart.svg()
-                .append('g');
+            _g = d3.select(_chart.anchor())
+                .append("svg") 
+                .attr("height",_chart.height())
+                .attr("width",_chart.width())
+                .append('g')
+                .on('click', _chart.onClick)
+                .attr('cursor', 'pointer');
         }
-        _chart._doRedraw = function (){
+
+        function drawWordCloud(){
             initializeSvg();
-            drawCloud();
-            return _chart;
-        }
-
-        function drawCloud(){
-
+            
             var groups = _chart._computeOrderedGroups(_chart.data()).filter(function (d){
                 return _chart.valueAccessor()(d) !== 0;
             });
 
             var data = groups.map(function (d){
                 var value = _chart.valueAccessor()(d);
-                console.log(value);
+                var key = _chart.keyAccessor()(d);
                 var result = { 
                     'text' : d.key, 
                     'size' : checkSize(d),
-                    'value' : value
+                    'value' : value,
+                    'key' : key
                 }
 
                 return result;               
                 
             })
+
 
             _cloud =  d3.layout.cloud()
                 .size([_chart.width(), _chart.height()]);
@@ -72,10 +77,24 @@
                 })
                 .on("end", draw);
 
-               _cloud.start();
+            _cloud.start();
 
-                console.log(d3.select(_chart.anchor())[0]);
+        }
 
+        
+        
+        _chart._doRedraw = function (){
+            _chart.on('postRedraw',function(){
+                _chart.apply();   
+            });
+
+            drawWordCloud();
+        }
+
+        _chart.apply = function(){
+            d3.select(_chart.anchor())
+                    .select('svg')
+                    .attr("viewBox", _chart.minX()+' '+_chart.minY()+' '+_chart.width()+' '+_chart.height()) 
         }
         
         function checkSize(d){
@@ -88,6 +107,7 @@
             
             return x;
         }
+
 
         function draw(words) {
             _g
@@ -104,7 +124,7 @@
             .attr("transform", function(d) {
                 return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
             })
-            .text(function(d) { return d.text; });
+            .text(function(d) { return d.text; })
         }
 
         _chart.minX = function (_){
