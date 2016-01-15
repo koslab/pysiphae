@@ -44,31 +44,28 @@ class Views(object):
         self.context = context
         self.request = request
 
-    @reify
-    def main_template(self):
-        main_template = get_renderer('templates/main_template.pt').implementation()
-        return main_template.macros['master']
+def main_template(request):
+    main_template = get_renderer('templates/main_template.pt').implementation()
+    return main_template.macros['master']
 
-    @property
-    def vars(self):
-        registry = self.request.registry
-        result = {}
-        for name, factory in  registry.getUtilitiesFor(ITemplateVariables):
-            result.update(factory(self.request))
-        return TraversableDict(result)
+def vars(request):
+    registry = request.registry
+    result = {}
+    for name, factory in  registry.getUtilitiesFor(ITemplateVariables):
+        result.update(factory(request))
+    return TraversableDict(result)
 
-    @property
-    def main_navigation(self):
-        links = []
-        for name, provider in getUtilitiesFor(INavigationProvider):
-            links += provider(self.request)
-        def has_permission(link):
-            if link.get('permission', None):
-                return self.request.has_permission(link['permission'])
-            return True
-        links = filter(has_permission, links)
-        links = sorted(links, key=lambda x: x['order'])
-        return links
+def main_navigation(request):
+    links = []
+    for name, provider in getUtilitiesFor(INavigationProvider):
+        links += provider(request)
+    def has_permission(link):
+        if link.get('permission', None):
+            return request.has_permission(link['permission'])
+        return True
+    links = filter(has_permission, links)
+    links = sorted(links, key=lambda x: x['order'])
+    return links
 
 
 class Pysiphae(Views):

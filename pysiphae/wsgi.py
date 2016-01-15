@@ -2,6 +2,7 @@ from pyramid.config import Configurator
 from ConfigParser import ConfigParser
 from zope.component import getSiteManager
 from pysiphae.root import root_factory
+from pysiphae import views
 from pysiphae.processmgr.payload import ProcessManager
 
 def main(global_config, **settings):
@@ -31,6 +32,11 @@ def main(global_config, **settings):
             config.registry.registerUtility(ProcessManager(url), name=name)
 
     config.add_static_view('++static++', 'static', cache_max_age=3600)
+
+    config.add_request_method(views.main_template, 'main_template', reify=True)
+    config.add_request_method(views.vars, 'template_vars', property=True)
+    config.add_request_method(views.main_navigation, 'main_navigation',
+            property=True)
     config.add_route('home','/')
     config.add_route('login','/login')
     config.add_route('logout','/logout')
