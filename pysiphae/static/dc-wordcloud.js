@@ -117,7 +117,6 @@
 
 
         function draw(words) {
-            console.log(words);
             _g
             .attr("width", _chart.width())
             .attr("height", _chart.height())
