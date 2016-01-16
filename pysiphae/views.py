@@ -12,11 +12,12 @@ from .security import groupfinder
 @home_url
 def home_url_from_settings(request, groups):
     settings = request.registry.settings
-    s = settings.get('pysiphae.home_urls', '')
-    if not s:
+    entries = settings['pysiphae'].get('home_urls', [])
+    if not entries:
         return None
-    entries = [i.split('=') for i in s.strip().split('\n')]
-    for g, path in entries:
+    for e in entries:
+        g = e['principal']
+        path = e['path']
         if g not in groups:
             continue
         return request.resource_url(request.context, path)

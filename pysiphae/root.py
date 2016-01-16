@@ -1,7 +1,11 @@
 from pyramid.security import Allow, Deny, Everyone
+from pysiphae.interfaces import ISiteRoot
+from zope.interface import implements
 import re
 
 class PysiphaeRoot(object):
+    implements(ISiteRoot)
+
     __name__ = ''
 
     def __init__(self, request):
@@ -10,17 +14,9 @@ class PysiphaeRoot(object):
     @property
     def __acl__(self):
         settings = self.request.registry.settings
-        acl = []
-        if not ('pysiphae.acl' in settings):
-            return [(Allow, Everyone, 'pysiphae.View')]
-        for ace in settings['pysiphae.acl'].strip().split('\n'):
-            ace = ace.strip()
-            if not ace:
-                continue
-            if ace.startswith('#'):
-                continue
-            acl.append(ace.split(','))
-        return acl
+        if not ('acl' in settings['pysiphae']):
+            return [(Allow, Everyone, settings['pysiphae']['default_permission'])]
+        return settings['pysiphae']['acl']
 
     def isAnonymous(self):
         identity = self.request.environ.get('repoze.who.identity', None)

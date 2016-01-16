@@ -15,6 +15,9 @@ class IStorageFactory(Interface):
 class IProcessManager(Interface):
     pass
 
+class ISiteRoot(Interface):
+    pass
+
 class IProcessPayload(Interface):
     name = Attribute('Name')
     type = Attribute('Type of payload (eg: pyspark, hive)')
@@ -32,3 +35,7 @@ class IObjStorage(Interface):
     def delete(obj): pass
     def update(obj): pass
     def query(**filters): pass
+
+
+class IViewletManager(Interface):
+    pass

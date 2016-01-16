@@ -18,6 +18,7 @@ requires = [
     'pyramid_debugtoolbar',
     'pyramid_zcml',
     'pyramid_who',
+    'pyramid_viewgroup',
     'zope.component',
     'waitress',
     'SQLAlchemy',

@@ -1,0 +1,23 @@
+# Project Title
+title: ${project}
+# Plugins 
+plugins =
+    ${project}
+home_urls =
+    - principal: group:LoggedIn
+      path: ${project}
+
+# -- Enable Authentication --
+# 
+# default_permission : pysiphae.View
+# acl:
+#    - [Allow, "group:LoggedIn", pysiphae.View]
+#
+# -- Set roles --
+#
+# pysiphae.roles =
+#    - user:username
+#      principals:
+#        - group:groupname0
+#        - group:groupname1
+

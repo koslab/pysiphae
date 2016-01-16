@@ -30,29 +30,7 @@ pyramid.default_locale_name = en
 pyramid.includes =
     pyramid_debugtoolbar
 
-# Project Title
-
-pysiphae.title = ${project}
-
-# Plugins 
-pysiphae.plugins =
-    ${project}
-
-pysiphae.home_urls =
-    group:LoggedIn=${project}
-
-# Enable Authentication
-# 
-# pysiphae.default_permission = pysiphae.View
-# pysiphae.acl =
-#    Allow,group:LoggedIn,pysiphae.View
-#
-#
-# Set roles
-#
-# pysiphae.roles =
-#    username=group:groupname0,group:groupname1
-
+pysiphae.config = %(here)s/development.yml
 # By default, the toolbar only appears for clients from IP addresses
 # '127.0.0.1' and '::1'.
 # debugtoolbar.hosts = 127.0.0.1 ::1

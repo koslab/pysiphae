@@ -15,12 +15,7 @@ def groupfinder(identity, request):
             result.append('group:%s' % groupname)
     # append from settings override
     settings = request.registry.settings
-    if 'pysiphae.roles' in settings:
-        entries = settings['pysiphae.roles'].strip().split('\n')
-        for entry in entries:
-            entry = entry.strip()
-            if not entry: continue
-            u,g = entry.split('=')
-            if u == identity['repoze.who.userid']:
-                result += g.split(',')
+    for entry in settings['pysiphae'].get('roles', []):
+        if entry['user'] == identity['repoze.who.userid']:
+            result += entry['principals']
     return result
