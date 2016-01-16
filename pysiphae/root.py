@@ -40,7 +40,7 @@ class PysiphaeRoot(object):
     @property
     def title(self):
         settings = self.request.registry.settings
-        title = settings.get('pysiphae.title','Pysiphae')
+        title = settings['pysiphae'].get('title','Pysiphae')
         return title
 
 def root_factory(request,*args,**kwargs):
