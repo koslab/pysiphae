@@ -20,4 +20,10 @@ home_urls =
 #      principals:
 #        - group:groupname0
 #        - group:groupname1
-
+processmanagers:
+    - name: default
+      address: http://localhost:8888
+viewgroups:
+    - name: pysiphae.leftcolumn
+      viewnames:
+        - pysiphae.navigation

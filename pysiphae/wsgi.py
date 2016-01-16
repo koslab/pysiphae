@@ -38,10 +38,17 @@ def main(global_config, **settings):
         else:
             config.registry.registerUtility(ProcessManager(address), name=name)
 
+    # viewgroups
+    for vg in pconfig.get('viewgroups', []):
+        vg['context'] = vg.get('context', 'pysiphae.interfaces.ISiteRoot')
+        config.add_viewgroup(**vg)
+
     config.add_static_view('++static++', 'static', cache_max_age=3600)
     config.add_request_method(views.main_template, 'main_template', reify=True)
     config.add_request_method(views.vars, 'template_vars', property=True)
     config.add_request_method(views.main_navigation, 'main_navigation',
+            property=True)
+    config.add_request_method(views.viewgroup_provider, 'provider',
             property=True)
     config.add_route('home','/')
     config.add_route('login','/login')

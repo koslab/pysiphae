@@ -352,16 +352,8 @@
         </div>
       </form>
       <!-- /.search form -->
-      <!-- sidebar menu: : style can be found in sidebar.less -->
-      <ul class="sidebar-menu">
-        <li class="header">MAIN NAVIGATION</li>
-        <li tal:repeat="link request.main_navigation">
-            <a tal:attributes="href link['href']">
-                <i class="fa fa-dashboard"></i>
-                <span tal:content="link['label']">Link</span>
-            </a>
-        </li>
-    </ul>
+      <div tal:replace="structure request.provider('pysiphae.leftcolumn')">
+      </div>
     </section>
     <!-- /.sidebar -->
   </aside>

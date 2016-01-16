@@ -3,9 +3,13 @@ from pysiphae.decorators import home_url, navigation
 @navigation
 def get_navigation(request):
     return [{
+        'type':'header',
+        'label': '${project}',
+        'order': 1000
+    }, {
         'href': '/${project}',
         'label': '${project} Dashboard',
-        'order': 1
+        'order': 1001
     }]
 
 @home_url

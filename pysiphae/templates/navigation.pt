@@ -1,0 +1,16 @@
+<!-- sidebar menu: : style can be found in sidebar.less -->
+<ul class="sidebar-menu">
+    <li tal:repeat="link links">
+        <tal:header condition="link.get('type','item') == 'header'">
+            <li class="header" tal:content="link['label']">Header</li>
+        </tal:header>
+
+        <tal:item condition="link.get('type','item') == 'item'">
+        <a tal:attributes="href link['href']">
+            <i tal:attributes="class string:fa ${link.get('icon','fa-dashboard')}">
+            </i>
+            <span tal:content="link['label']">Link</span>
+        </a>
+        </tal:item>
+    </li>
+</ul>

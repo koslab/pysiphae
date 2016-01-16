@@ -7,6 +7,7 @@ from .interfaces import (INavigationProvider, ITemplateVariables, IHomeUrl)
 from pyramid.httpexceptions import HTTPFound
 from pyramid.security import (remember, forget,  NO_PERMISSION_REQUIRED)
 from repoze.who.api import get_api as get_whoapi
+from pyramid_viewgroup import Provider
 from .security import groupfinder
 
 @home_url
@@ -61,6 +62,9 @@ def main_navigation(request):
     links = filter(has_permission, links)
     links = sorted(links, key=lambda x: x['order'])
     return links
+
+def viewgroup_provider(request):
+    return Provider(request.context, request)
 
 @view_config(route_name='home', renderer='templates/home.pt')
 def home(context, request):
@@ -126,3 +130,10 @@ def logout(context, request):
     headers = who_api.logout()
     url = request.resource_url(request.context)
     return HTTPFound(location=url,headers=headers)
+
+@view_config(name='pysiphae.navigation',
+        renderer='templates/navigation.pt')
+def navigation_view(context, request):
+    return {
+        'links': request.main_navigation
+    }
