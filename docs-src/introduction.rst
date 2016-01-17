@@ -43,6 +43,48 @@ Features of Pysiphae framework includes:
 
 * Memoize caching using `wraptor <https://pypi.python.org/pypi/Wraptor>`_
 
+Why Pysiphae?
+--------------
+
+Pysiphae is designed to solve the following problems when building an
+enterprise application for data visualization:
+
+* Reduce the effort of reimplementing common functionalities of an enterprise
+  web application through:
+
+  * Using pluggable authentication system that supports common enterprise
+    authentication backend such as LDAP.
+  * Implements default style and templates for common functionalities such as
+    login screen, navigation, main template.
+  * Pluggable storage system that allow implementation of custom components for
+    storing/querying data
+  * Pluggable viewlet/viewgroup system that allow implementing snippets that
+    can be inserted into main templates without modifying the main template
+    itself
+  * Pluggable payload execution system for executing ETL scripts
+  * Kerberos integration for Hadoop security compatibility (TBD)
+  * Configuration driven ACL, component registries
+
+The design of Pysiphae as a framework is heavily influenced by Plone as the
+author was primarily a Plone developer before switching to a different role.
+Pysiphae implements many Plone patterns that the author consider really useful
+for his development needs.
+
+Pysiphae utilizes Zope Component Architecture for many of its functionalities
+but exposes API that minimizes the need for devs to touch the component engines
+itself
+
+Wishlist
+---------
+
+A listing of features that would be great for future versions:
+
+* Vega-like configuration language implementation for defining data
+  visualization dashboard
+* Data collection endpoints for collecting common statistics
+* Repository of reusable plugins/components
+* Theme engine ala plone.app.theming
+
 Project Sponsors
 -----------------
 
@@ -52,3 +94,11 @@ Contributors
 -------------
 
 - Izhar Firdaus <izhar@kagesenshi.org>
+
+Credit
+------
+
+- This framework was originally built as a platform for development of
+  data visualization applications for a project for 
+  `Malaysian Administrative Modernization and Management Unit 
+  (MAMPU) <http://www.mampu.gov.my>`_
