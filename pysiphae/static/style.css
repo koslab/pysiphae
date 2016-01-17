@@ -2,6 +2,10 @@
     background: #eee;
 }
 
+.sidebar-menu>li>a {
+    white-space: normal;
+}
+
 #lock-screen {
     position: fixed;
     height: 100%;
