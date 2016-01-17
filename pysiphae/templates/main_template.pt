@@ -636,7 +636,6 @@
     <script type="text/javascript" src="/++static++/dc-responsive.js"></script>
     <script type="text/javascript" src="/++static++/dc-heatmap.js"></script>
     <script type="text/javascript" src="/++static++/dc-wordcloud.js"></script>
-    <script type="text/javascript" src="/++static++/dc-vis.js"></script>
     <script type="text/javascript" src="/++static++/pysiphae.js"></script>
 
     <metal:slot define-slot="javascript_footer_slot"/>

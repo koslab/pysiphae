@@ -44,6 +44,10 @@ def main_template(request):
     main_template = get_renderer('templates/main_template.pt').implementation()
     return main_template.macros['master']
 
+def pconfig(request):
+    pconfig = request.registry.settings.get('pysiphae', {})
+    return pconfig
+
 def vars(request):
     registry = request.registry
     result = {}

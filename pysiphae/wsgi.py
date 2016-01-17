@@ -50,6 +50,7 @@ def main(global_config, **settings):
             property=True)
     config.add_request_method(views.viewgroup_provider, 'provider',
             property=True)
+    config.add_request_method(views.pconfig, 'pconfig', property=True)
     config.add_route('home','/')
     config.add_route('login','/login')
     config.add_route('logout','/logout')
