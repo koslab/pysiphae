@@ -24,52 +24,6 @@ def home_url_from_settings(request, groups):
         return request.resource_url(request.context, path)
     return None
 
-class TraversableDict(object):
-    def __init__(self, data):
-        self.data = data
-
-    def __getattr__(self, key):
-        try:
-            result = self.data[key]
-        except KeyError:
-            raise AttributeError(key)
-        if isinstance(result, dict):
-            return TraversableDict(result)
-        return result
-
-    def __getitem__(self, key):
-        return self.data[key]
-
-def main_template(request):
-    main_template = get_renderer('templates/main_template.pt').implementation()
-    return main_template.macros['master']
-
-def pconfig(request):
-    pconfig = request.registry.settings.get('pysiphae', {})
-    return pconfig
-
-def vars(request):
-    registry = request.registry
-    result = {}
-    for name, factory in  registry.getUtilitiesFor(ITemplateVariables):
-        result.update(factory(request))
-    return TraversableDict(result)
-
-def main_navigation(request):
-    links = []
-    for name, provider in getUtilitiesFor(INavigationProvider):
-        links += provider(request)
-    def has_permission(link):
-        if link.get('permission', None):
-            return request.has_permission(link['permission'])
-        return True
-    links = filter(has_permission, links)
-    links = sorted(links, key=lambda x: x['order'])
-    return links
-
-def viewgroup_provider(request):
-    return Provider(request.context, request)
-
 @view_config(route_name='home', renderer='templates/home.pt')
 def home(context, request):
     identity = request.environ.get('repoze.who.identity', None)

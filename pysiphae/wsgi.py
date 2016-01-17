@@ -4,6 +4,7 @@ from zope.component import getSiteManager
 from pysiphae.root import root_factory
 from pysiphae import views
 from pysiphae.processmgr.payload import ProcessManager
+from pysiphae import requestmethods
 import yaml
 
 def main(global_config, **settings):
@@ -44,13 +45,13 @@ def main(global_config, **settings):
         config.add_viewgroup(**vg)
 
     config.add_static_view('++static++', 'static', cache_max_age=3600)
-    config.add_request_method(views.main_template, 'main_template', reify=True)
-    config.add_request_method(views.vars, 'template_vars', property=True)
-    config.add_request_method(views.main_navigation, 'main_navigation',
+    config.add_request_method(requestmethods.main_template, 'main_template', reify=True)
+    config.add_request_method(requestmethods.vars, 'template_vars', property=True)
+    config.add_request_method(requestmethods.main_navigation, 'main_navigation',
             property=True)
-    config.add_request_method(views.viewgroup_provider, 'provider',
+    config.add_request_method(requestmethods.viewgroup_provider, 'provider',
             property=True)
-    config.add_request_method(views.pconfig, 'pconfig', property=True)
+    config.add_request_method(requestmethods.pconfig, 'pconfig', property=True)
     config.add_route('home','/')
     config.add_route('login','/login')
     config.add_route('logout','/logout')
