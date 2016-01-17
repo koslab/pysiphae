@@ -6,6 +6,10 @@
     white-space: normal;
 }
 
+.sidebar-collapse .hide-on-collapse {
+    display:none;
+}
+
 #lock-screen {
     position: fixed;
     height: 100%;
