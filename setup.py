@@ -23,6 +23,7 @@ requires = [
     'waitress',
     'SQLAlchemy',
     'pyhive',
+    'pykafka',
     'python-memcached',
     'happybase',
     'elasticsearch',
