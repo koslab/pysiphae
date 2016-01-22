@@ -60,8 +60,9 @@ def login(context, request):
     if 'form.submitted' in request.params:
         creds = {
             'login':request.params['login'],
-            'password': request.params['password']
-        }  
+            'password': request.params['password'],
+            'max_age': request.registry.settings['pysiphae'].get('cookie_max_age', 3600)
+        }
         authenticated, headers = who_api.login(creds)
         if authenticated:
             return HTTPFound(location='/', headers=headers)
