@@ -27,7 +27,6 @@ requires = [
     'python-memcached',
     'happybase',
     'elasticsearch',
-    'elasticsearch_dsl',
     'ZODB3',
     'Paste',
     'pymongo',
