@@ -59,3 +59,11 @@ div.dc-chart { float:none };
 .autocomplete-suggestion.autocomplete-selected {
     background:#eee;
 }
+
+text.selected {
+    fill: rgb(31,119,189) !important;
+}
+
+text.deselected {
+    fill: rgb(247, 182, 210) !important;
+}
