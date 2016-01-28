@@ -361,13 +361,17 @@
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    <div id="message-container">
-        <tal:r repeat="flash request.pop_messages()">
-          <div tal:attributes="class string:alert alert-${flash['class']} alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            <span tal:content="structure flash['message']"></span>
-          </div>
-        </tal:r>
+    <div class="row">
+      <div class="col-xs-12">
+        <div id="message-container">
+          <tal:r repeat="flash request.pop_messages()">
+            <div tal:attributes="class string:alert alert-${flash['class']} alert-dismissable">
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+              <span tal:content="structure flash['message']"></span>
+            </div>
+          </tal:r>
+        </div>
+      </div>
     </div>
     <!-- Content Header (Page header) -->
     <section class="content-header">

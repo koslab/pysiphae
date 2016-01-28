@@ -59,3 +59,7 @@ div.dc-chart { float:none };
 .autocomplete-suggestion.autocomplete-selected {
     background:#eee;
 }
+
+#message-container {
+    margin:5px;
+}
