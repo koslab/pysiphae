@@ -38,3 +38,11 @@ def storage_factory(schemes):
         venusian.attach(wrapped, callback)
         return wrapped
     return decorator
+
+def request_method(*args, **kwargs):
+    def decorator(wrapped):
+        def callback(scanner, name, obj):
+            scanner.config.add_request_method(obj, *args, **kwargs)
+        venusian.attach(wrapped, callback)
+        return wrapped
+    return decorator

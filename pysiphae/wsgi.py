@@ -5,7 +5,9 @@ from pysiphae.root import root_factory
 from pysiphae import views
 from pysiphae.processmgr.payload import ProcessManager
 from pysiphae import requestmethods
+from pyramid.session import SignedCookieSessionFactory
 import yaml
+import uuid
 
 def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
@@ -16,6 +18,10 @@ def main(global_config, **settings):
     config.load_zcml('pysiphae:configure.zcml')
     config.include('pyramid_chameleon')
     config.include('pyramid_viewgroup')
+
+    sessionfactory = SignedCookieSessionFactory(uuid.uuid4().hex)
+
+    config.set_session_factory(sessionfactory)
 
     pconfig = yaml.load(
             open(settings.get('pysiphae.config')).read())
