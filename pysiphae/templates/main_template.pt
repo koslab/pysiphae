@@ -598,7 +598,7 @@
 </script>
 <!-- Bootstrap 3.3.5 -->
 <script src="/++static++/bower_components/adminlte/bootstrap/js/bootstrap.min.js"></script>
-<script src"/++static++/bower_components/raphael/raphael-min.js"></script>
+<script src="/++static++/bower_components/raphael/raphael-min.js"></script>
 <!-- Sparkline -->
 <script src="/++static++/bower_components/adminlte/plugins/sparkline/jquery.sparkline.min.js"></script>
 <!-- jvectormap -->
