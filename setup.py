@@ -38,7 +38,8 @@ requires = [
     'tornado',
     'argh',
     'asset',
-    'requests'
+    'requests',
+    'phoenixdb',
 ]
 
 setup(name='pysiphae',

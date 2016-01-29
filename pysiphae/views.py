@@ -66,8 +66,7 @@ def login(context, request):
         authenticated, headers = who_api.login(creds)
         if authenticated:
             return HTTPFound(location='/', headers=headers)
-
-    message = 'Failed login'
+        request.flash_message('error', 'Invalid username or password')
 
     _, headers = who_api.login({})
 
@@ -76,7 +75,6 @@ def login(context, request):
         del request.environ['REMOTE_USER']
 
     return dict(
-        message = message,
         url = request.application_url + '/login',
         came_from = came_from,
         login = login,

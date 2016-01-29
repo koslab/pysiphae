@@ -18,25 +18,6 @@ class PysiphaeRoot(object):
             return [(Allow, Everyone, settings['pysiphae']['default_permission'])]
         return settings['pysiphae']['acl']
 
-    def isAnonymous(self):
-        identity = self.request.environ.get('repoze.who.identity', None)
-        return False if identity else True
-
-    def getAuthenticatedUser(self):
-        identity = self.request.environ.get('repoze.who.identity', None)
-        if not identity:
-            return {}
-        identity = dict(identity)
-        userid = identity.get('repoze.who.userid', '')
-        if not userid:
-            return {}
-        if re.match(r'(\w+=.+,?)+', userid):
-            userid = userid.split(',')[0].split('=')[1]
-        return {
-            'userid': userid,
-            'identity': identity
-        }
-
     @property
     def title(self):
         settings = self.request.registry.settings

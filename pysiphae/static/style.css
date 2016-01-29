@@ -66,4 +66,7 @@ text.selected {
 
 text.deselected {
     fill: rgb(247, 182, 210) !important;
+
+#message-container {
+    margin:5px;
 }
