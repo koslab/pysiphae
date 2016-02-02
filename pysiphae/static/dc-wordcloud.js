@@ -62,12 +62,12 @@
                 var title = _chart.title()(d);
                 var result = { 
                     'text' : d.key, 
-                    'size' : checkSize(d),
+                    'size' : checkSize(value),
                     'value' : value,
+                    'category': d.value.category,
                     'key' : key,
                     'title': title
                 }
-
                 return result;               
                 
             })
@@ -109,10 +109,10 @@
         
         function checkSize(d){
             var x = 0;
-            if(d.value <= 0) { 
+            if(d <= 0) { 
                 x = 0
             } else { 
-                x = Math.log(d.value)*_chart.relativeSize();
+                x = Math.log(d)*_chart.relativeSize();
             }
             
             return x;
@@ -126,7 +126,7 @@
                     .enter().append("text")
                     .style("font-size", function(d) { return d.size + "px"; })
                     .style("font-family", _chart.font())
-                    .style("fill", function(d, i) { return _fill(i); })
+                    .style("fill", function(d, i) { return _fill(d,i); })
                     .attr("text-anchor", "middle")
                     .attr("class","cloud")
                     .attr("transform", function(d) {
@@ -227,30 +227,21 @@
             return _chart;
         }
         
-        _chart.coordinateAccessor = function (_) {
-            if (!arguments.length) {
-                return _coordinate;
-            };
-
-            _coordinate = _;
-            return _chart;
-        };
-
-        _chart.radiusAccessor = function (_) {
-            if (!arguments.length) {
-                return _radiusAccessor;
-            }
-
-            _radiusAccessor = _;
-            return _chart;
-        };
-        
         _chart.relativeSize = function (_){
             if(!arguments.length){
                 return _relativeSize;
             }
             
             _relativeSize = _;
+            return _chart;
+        }
+
+        _chart.colors = function (_){
+            if(!arguments.length){
+                return _fill;
+            }
+            
+            _fill = _;
             return _chart;
         }
 
