@@ -60,6 +60,13 @@ div.dc-chart { float:none };
     background:#eee;
 }
 
+text.selected {
+    fill: rgb(31,119,189) !important;
+}
+
+text.deselected {
+    fill: rgb(247, 182, 210) !important;
+
 #message-container {
     margin:5px;
 }

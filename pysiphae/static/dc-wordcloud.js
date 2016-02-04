@@ -10,12 +10,16 @@
         
         var _cloud = null,
             _g = null,
+            _svg = null,
+            _title = null,
+            _text = null,
             _padding = 5,
             _font = "Impact",
             _relativeSize = 10,
             _minX = 0,
             _minY = 0,
-            _fill = d3.scale.category20();
+            _fill = d3.scale.category20(),
+            _tempColor = null;
         
 
         _chart._doRender = function (){
@@ -24,25 +28,27 @@
             })
             drawWordCloud();
 
-            return _chart._doRedraw();
+            return _chart;
         }
 
         function initializeSvg(){
 
             _chart.select('svg').remove();
 
-            _g = d3.select(_chart.anchor())
+            _svg = d3.select(_chart.anchor())
                 .append("svg") 
                 .attr("height",_chart.height())
                 .attr("width",_chart.width())
+
+            _g = _svg
                 .append('g')
                 //.on('click', _chart.onClick)
-                .attr('cursor', 'pointer');
+                .attr('cursor', 'pointer')
+                .attr("width", _chart.width())
+                .attr("height", _chart.height())
+                .attr("transform", "translate(150,150)")
         }
 
-        var titleFunction = function (d) {
-            return _chart.title()(d);
-        };
 
         function drawWordCloud(){
             initializeSvg();
@@ -74,28 +80,27 @@
             _cloud
                 .words(data)
                 .padding(_chart.padding())
-                .rotate(function() { 
-                    return ~~(Math.random() * 2) * 90; 
-                })
+                .rotate(function() { return ~~(Math.random() * 2) * 90; })
                 .font(_chart.font())
                 .fontSize(function(d) { 
                     return d.size; 
                 })
                 .on("end", draw);
-
             
             _cloud.start();
 
         }
 
-        
+        function isData() {
+            return _isData;
+        }
         
         _chart._doRedraw = function (){
             _chart.on('postRedraw',function(){
                 _chart.apply();   
             });
 
-            drawWordCloud();
+           drawWordCloud();
         }
 
         _chart.apply = function(){
@@ -117,22 +122,55 @@
 
 
         function draw(words) {
-            _g
-            .attr("width", _chart.width())
-            .attr("height", _chart.height())
-            .attr("transform", "translate(150,150)")
-            .selectAll("text")
-            .data(words)
-            .enter().append("text")
-            .style("font-size", function(d) { return d.size + "px"; })
-            .style("font-family", _chart.font())
-            .style("fill", function(d, i) { return _fill(d,i); })
-            .attr("text-anchor", "middle")
-            .attr("transform", function(d) {
-                return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
-            })
-            .text(function(d) { return d.text; }).append('title').text(function(d){return d.title});
 
+            _text = _g
+                    .selectAll("text")
+                    .data(words)
+                    .enter().append("text")
+                    .style("font-size", function(d) { return d.size + "px"; })
+                    .style("font-family", _chart.font())
+                    .style("fill", function (d,i){ return _fill(d,i)})
+                    .attr("text-anchor", "middle")
+                    .attr("class","cloud")
+                    .attr("transform", function(d) {
+                        return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+                    })
+                    .text(function(d) { return d.text; })
+                    .on('click', _chart.onClick)
+                    .on('mouseenter', onmouseEnter)
+                    .on('mouseout', onmouseOut );
+
+            _title = _text
+                    .append('title')
+                    .text(function(d){return d.title});
+
+            highlightFilter();
+
+        }
+
+        function onmouseEnter(d, i) {
+            _tempColor = d3.select(this).style('fill');
+            d3.select(this).style('fill', '#8A2908');
+        }
+
+        function onmouseOut(d, i) {
+            d3.select(this).style('fill', _tempColor);
+        }
+
+        function highlightFilter() {
+            if (_chart.hasFilter()) {
+                _text.each(function (d) {
+                    if (_chart.hasFilter(_chart.keyAccessor()(d))) {
+                        _chart.highlightSelected(this);
+                    } else {
+                        _chart.fadeDeselected(this);
+                    }
+                });
+            } else {
+                _text.each(function () {
+                    _chart.resetHighlight(this);
+                });
+            }
         }
 
         _chart.minX = function (_){
@@ -148,7 +186,7 @@
             if(!arguments.length){
                 return _minY;
             }
-            
+           
             _minY = _;
             return _chart;
         }
