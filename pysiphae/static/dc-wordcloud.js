@@ -18,7 +18,8 @@
             _relativeSize = 10,
             _minX = 0,
             _minY = 0,
-            _fill = d3.scale.category20();
+            _fill = d3.scale20,
+            _tempColor = null;
         
 
         _chart._doRender = function (){
@@ -79,6 +80,7 @@
             _cloud
                 .words(data)
                 .padding(_chart.padding())
+                .rotate(function() { return ~~(Math.random() * 2) * 90; })
                 .font(_chart.font())
                 .fontSize(function(d) { 
                     return d.size; 
@@ -120,13 +122,14 @@
 
 
         function draw(words) {
+
             _text = _g
                     .selectAll("text")
                     .data(words)
                     .enter().append("text")
                     .style("font-size", function(d) { return d.size + "px"; })
                     .style("font-family", _chart.font())
-                    .style("fill", function(d, i) { return _fill(d,i); })
+                    .style("fill", function (d,i){ return _fill(d,i)})
                     .attr("text-anchor", "middle")
                     .attr("class","cloud")
                     .attr("transform", function(d) {
@@ -134,12 +137,8 @@
                     })
                     .text(function(d) { return d.text; })
                     .on('click', _chart.onClick)
-                    .on('mouseenter', function (d, i) {
-                        d3.select(this).attr('stroke', '#303030');
-                    })
-                    .on('mouseout', function (d, i) {
-                        d3.select(this).attr('stroke', 'none');
-                    });
+                    .on('mouseenter', onmouseEnter)
+                    .on('mouseout', onmouseOut );
 
             _title = _text
                     .append('title')
@@ -149,30 +148,13 @@
 
         }
 
-        function reDraw(words){
+        function onmouseEnter(d, i) {
+            _tempColor = d3.select(this).style('fill');
+            d3.select(this).style('fill', '#8A2908');
+        }
 
-            var groups = _chart._computeOrderedGroups(_chart.data()).filter(function (d){
-                return _chart.valueAccessor()(d) !== 0;
-            });
-
-            var data = groups.map(function (d){
-                var value = _chart.valueAccessor()(d);
-                var key = _chart.keyAccessor()(d);
-                var title = _chart.title()(d);
-                var result = { 
-                    'text' : d.key, 
-                    'size' : d.font, 
-                    'value' : value,
-                    'key' : key,
-                    'title': title
-                }
-
-                return result;               
-                
-            })
-
-            highlightFilter();
-            
+        function onmouseOut(d, i) {
+            d3.select(this).style('fill', _tempColor);
         }
 
         function highlightFilter() {
