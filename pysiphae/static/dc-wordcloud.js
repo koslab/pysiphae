@@ -18,7 +18,7 @@
             _relativeSize = 10,
             _minX = 0,
             _minY = 0,
-            _fill = d3.scale20,
+            _fill = d3.scale.category20(),
             _tempColor = null;
         
 
