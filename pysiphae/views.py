@@ -24,7 +24,8 @@ def home_url_from_settings(request, groups):
         return request.resource_url(request.context, path)
     return None
 
-@view_config(route_name='home', renderer='templates/home.pt')
+@view_config(route_name='home', renderer='templates/home.pt',
+             permission=NO_PERMISSION_REQUIRED)
 def home(context, request):
     identity = request.environ.get('repoze.who.identity', None)
     groups = []
