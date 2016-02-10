@@ -1,9 +1,9 @@
 # Project Title
 title: ${project}
 # Plugins 
-plugins =
+plugins:
     ${project}
-home_urls =
+home_urls:
     - principal: group:LoggedIn
       path: ${project}
 
