@@ -2,7 +2,7 @@
 title: ${project}
 # Plugins 
 plugins:
-    ${project}
+    - ${project}
 home_urls:
     - principal: group:LoggedIn
       path: ${project}
