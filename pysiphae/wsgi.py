@@ -65,11 +65,11 @@ def main(global_config, **settings):
 
     plugins = pconfig.get('plugins', [])
     for plugin in plugins:
-        config.scan(plugin)
-        config.load_zcml(plugin + ':configure.zcml')
         package = config.maybe_dotted(plugin)
         if getattr(package, 'configure', None):
             package.configure(config, settings)
+        config.load_zcml(plugin + ':configure.zcml')
+        config.scan(plugin)
 
     return config.make_wsgi_app()
 
