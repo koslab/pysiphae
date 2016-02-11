@@ -1,6 +1,9 @@
 import re
 
 def groupfinder(identity, request):
+    if not identity:
+        return ['Anonymous']
+
     result = []
     if 'repoze.who.userid' in identity:
         userid = identity['repoze.who.userid']

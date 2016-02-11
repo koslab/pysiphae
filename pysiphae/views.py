@@ -28,9 +28,7 @@ def home_url_from_settings(request, groups):
              permission=NO_PERMISSION_REQUIRED)
 def home(context, request):
     identity = request.environ.get('repoze.who.identity', None)
-    groups = []
-    if identity:
-        groups = groupfinder(identity, request)
+    groups = groupfinder(identity, request)
     for name, resolver in request.registry.getUtilitiesFor(IHomeUrl):
         url = resolver(request, groups)
         if url:
