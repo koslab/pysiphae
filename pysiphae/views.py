@@ -90,7 +90,8 @@ def logout(context, request):
     return HTTPFound(location=url,headers=headers)
 
 @view_config(name='pysiphae.navigation',
-        renderer='templates/navigation.pt')
+        renderer='templates/navigation.pt',
+        permission=NO_PERMISSION_REQUIRED)
 def navigation_view(context, request):
     return {
         'links': request.main_navigation
