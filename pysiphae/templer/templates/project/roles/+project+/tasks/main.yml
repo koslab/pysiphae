@@ -1,0 +1,76 @@
+---
+# tasks file for app
+- name: install python deps
+  yum: name=git,python-devel,python,python-virtualenv,python-setuptools
+
+- name: install lib deps
+  yum: name=cyrus-sasl-devel,openldap-devel,libxml2-devel,libxslt-devel
+
+- name: install mysql deps
+  yum: name=mariadb,mariadb-server,mariadb-devel
+
+- name: install npm
+  yum: name=npm
+
+- name: install bower
+  command: npm install -g bower
+  args:
+      creates: /usr/bin/bower
+
+- name: install supervisor
+  yum: name=supervisor
+
+- name: create user
+  user: name={{ effective_user }} shell=/bin/bash
+
+- name: checkout app
+  git: repo={{ repo_url }}
+       dest={{ install_path }}
+       update=yes
+
+- name: generate repoze.who config
+  template: src=who-prod.ini_tmpl dest={{ install_path }}/who-prod.ini
+
+- name: copy github config
+  copy: src=github.cfg dest={{ install_path }}/github.cfg
+
+- name: chown
+  command: chown -R {{ effective_user }}:{{ effective_user }} {{ install_path }}
+
+- stat: path={{ install_path }}/bin/develop
+  register: develop_script
+
+- name: update sources
+  command: sudo -u {{ effective_user }} ./bin/develop up -f
+  when: develop_script.stat.exists
+  args:
+      chdir: "{{ install_path }}"
+
+- name: build app
+  command: sudo -u {{ effective_user }} ./build.sh
+  args:
+      chdir: "{{ install_path }}"
+
+- name: start mysql
+  service: name=mariadb state=restarted enabled=yes
+  when: db_type == 'mysql'
+
+- name: create database
+  mysql_db: name={{ db_name }}
+  args:
+      creates: /var/lib/mysql/{{ db_name }}
+  when: db_type == 'mysql'
+
+- name: grant permission to database
+  command: mysql {{ db_name }} --execute "grant all on {{ db_name }}.* to {{ effective_user }}@localhost"
+  when: db_type == 'mysql'
+
+- name: install supervisord config
+  template: src=supervisord.ini_tmpl dest=/etc/supervisord.d/{{ name }}.ini
+
+- name: start supervisord on boot
+  service: name=supervisord state=started enabled=yes
+
+- name: start app 
+  supervisorctl: name={{ name }} state=restarted 
+

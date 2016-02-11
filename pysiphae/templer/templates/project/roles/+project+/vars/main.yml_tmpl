@@ -1,0 +1,11 @@
+---
+# vars file for app
+name: ${project}
+effective_user: pysiphae
+repo_url:
+install_path: "/opt/{{ name }}"
+repozewho_tkt_secret: s3cr33t
+repozewho_cookie_name: "{{ name }}"
+db_name: ${namespace_package}_${package}
+# mysql / postgres
+db_type: 
