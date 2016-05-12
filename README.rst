@@ -2,6 +2,7 @@ Dependencies
 ===========
 
 ::
+
     python2.7
     virtualenv
     bower
