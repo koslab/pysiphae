@@ -32,3 +32,8 @@ Initialize::
 Start development server::
 
     ./bin/pserve development.ini
+
+Detail Documentation
+====================
+
+http://pysiphae.readthedocs.io/en/latest/
