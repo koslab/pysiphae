@@ -1,15 +1,19 @@
 Dependencies
 ===========
 
-::
-
-    python2.7
-    virtualenv
-    bower
-    cyrus-sasl-devel
 
 Installation
 ==============
+
+Dependencies:
+
+* python-devel
+* mysql-devel
+* cyrus-sasl-devel
+* openldap-devel
+* gcc-c++
+* python-virtualenv
+* npm
 
 ::
 
