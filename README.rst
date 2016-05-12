@@ -1,3 +1,11 @@
+Dependencies
+===========
+::
+    python2.7
+    virtualenv
+    bower
+    cyrus-sasl-devel
+
 Installation
 ==============
 
@@ -12,7 +20,7 @@ Creating a dash plugin project
 
 Initialize::
 
-    templer pysiphae_project mynamespace.myproject
+    templer pysiphae mynamespace.myproject
     cd mynamespace.myproject/
     virtualenv venv/
     ./venv/bin/python bootstrap-buildout.py

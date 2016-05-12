@@ -41,6 +41,24 @@ on Pysiphae
 Setting up your environment
 ============================
 
+.. note::
+
+   You will need the following system dependencies to build pysiphae
+   successfully on a Fedora/CentOS/RHEL systems. On debian based systems,
+   please install their equivalent
+
+   * python-devel
+   * mysql-devel
+   * cyrus-sasl-devel
+   * openldap-devel
+   * gcc-c++
+   * python-virtualenv
+   * npm
+
+   You will also need to install bower::
+
+     sudo npm install -g bower
+
 Installing Pysiphae
 --------------------
 
@@ -110,24 +128,6 @@ following command:
    ./bin/pserve development.ini
 
 The server should be running at http://localhost:6543. To stop the server, press ``CTRL+C``
-
-.. note::
-
-   You will need the following system dependencies to build pysiphae
-   successfully on a Fedora/CentOS/RHEL systems. On debian based systems,
-   please install their equivalent
-
-   * python-devel
-   * mysql-devel
-   * cyrus-sasl-devel
-   * openldap-devel
-   * gcc-c++
-   * python-virtualenv
-   * npm
-
-   You will also need to install bower::
-
-     sudo npm install -g bower
 
 .. warning::
 
