@@ -1,12 +1,6 @@
 Dependencies
 ===========
 
-
-Installation
-==============
-
-Dependencies:
-
 * python-devel
 * mysql-devel
 * cyrus-sasl-devel
@@ -14,6 +8,10 @@ Dependencies:
 * gcc-c++
 * python-virtualenv
 * npm
+
+
+Installation
+==============
 
 ::
 
